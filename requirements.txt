@@ -1,0 +1,5 @@
+opencv_python==4.12.0.88
+numpy==2.2.6
+physics_tenpy==1.1.0
+ipykernel==7.1.0
+matplotlib==3.10.7
