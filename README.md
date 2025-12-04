@@ -19,6 +19,6 @@
 After installing the dependencies from [requirements.txt](./requirements.txt), you can run [the Jupyter Notebook](./Code/PhotometricStereo.ipynb)
 
 ## Hardware
-The code is tested on:
-- Windows 11
-- Mac OS 26 Tahoe
+- The code is tested on:
+    - Windows 11 (... seconds to run)
+    - Mac OS 26 Tahoe (... seconds to run)
