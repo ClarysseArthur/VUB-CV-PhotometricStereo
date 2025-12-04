@@ -8,7 +8,7 @@
 > Vrije Universiteit Brussel<br>
 > jens.dumortier@vub.be
 
-> **Guillauem Tibergyn**<br>
+> **Guillaume Tibergyn**<br>
 > Vrije Universiteit Brussel<br>
 > guillaume.tibergyn@vub.be
 
