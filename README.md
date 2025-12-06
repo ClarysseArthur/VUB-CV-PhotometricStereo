@@ -20,5 +20,5 @@ After installing the dependencies from [requirements.txt](./requirements.txt), y
 
 ## Hardware
 - The code is tested on:
-    - Windows 11 (... seconds to run)
-    - Mac OS 26 Tahoe (... seconds to run)
+    - Windows 11 (±2 seconds to run, including Plotly 3D visualization)
+    - Mac OS 26 Tahoe (±2 seconds to run, including Plotly 3D visualization)

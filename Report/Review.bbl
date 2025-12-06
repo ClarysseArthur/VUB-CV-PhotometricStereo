@@ -1,0 +1,59 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{2}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Hashimoto et~al\mbox{.}(2019)]%
+        {hashimoto_uncalibrated_2019}
+\bibfield{author}{\bibinfo{person}{Shuhei Hashimoto}, \bibinfo{person}{Daisuke Miyazaki}, {and} \bibinfo{person}{Shinsaku Hiura}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Uncalibrated photometric stereo constrained by intrinsic reflectance image and shape from silhoutte}. In \bibinfo{booktitle}{\emph{2019 16th {International} {Conference} on {Machine} {Vision} {Applications} ({MVA})}}. \bibinfo{publisher}{IEEE}, \bibinfo{address}{Tokyo, Japan}, \bibinfo{pages}{1--6}.
+\newblock
+\showISBNx{978-4-901122-18-4}
+\href{https://doi.org/10.23919/MVA.2019.8758025}{doi:\nolinkurl{10.23919/MVA.2019.8758025}}
+
+
+\bibitem[Xiong et~al\mbox{.}({[n.\,d.]})]%
+        {xiong_shading_nodate}
+\bibfield{author}{\bibinfo{person}{Ying Xiong}, \bibinfo{person}{Ayan Chakrabarti}, \bibinfo{person}{Ronen Basri}, \bibinfo{person}{Steven~J. Gortler}, \bibinfo{person}{David Jacobs}, {and} \bibinfo{person}{Todd Zicker}.} \bibinfo{year}{[n.\,d.]}\natexlab{}.
+\newblock \bibinfo{title}{From {Shading} to {Local} {Shape}}.
+\newblock
+\urldef\tempurl%
+\url{https://vision.seas.harvard.edu/qsfs/index.html}
+\showURL{%
+\tempurl}
+
+
+\end{thebibliography}

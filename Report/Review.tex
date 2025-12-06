@@ -4,6 +4,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{wrapfig}
 \usepackage{multicol}
@@ -17,7 +18,7 @@
 \usepackage{listings}
 
 \newcommand{\cbox}{$\square$}
-\newcommand{\cboxchecked}{$\blacksquare$}
+\newcommand{\cboxchecked}{$\boxtimes$}
 
 \setcounter{secnumdepth}{2}
 
@@ -62,17 +63,101 @@
 \setlist[enumerate,2]{label=\alph*.}
 \setlist[enumerate,3]{label=\roman*.}
 
-\begin{abstract}
-Coming soon
-\end{abstract}
-
 \maketitle
 
 \section{Summary}
-\dots
+The reimplementation in this group project was based on the paper "\textit{Uncalibrated photometric stereo constrained by intrinsic reflectance image and shape from silhoutte}" by \citeauthor{hashimoto_uncalibrated_2019}
+
+The main goal of the original paper is to implement an uncalibrated photometric stereo pipeline that estimates surface normals from multiple images without prior knowledge of light directions.
+This pipeline first estimates the intrinsic reflectance (or albedo) and then calculates the guide normal \cite{hashimoto_uncalibrated_2019}.
+
+As a dataset, we use the photometric stereo dataset made by Harvard \cite{xiong_shading_nodate}.
+The dataset contains multiple shaded images of different animals, including cats, frogs, turtles, and more.
+To evaluate our results, we will calculate the average error of the estimated depth map with the actual results provided in the dataset.
 
 \section{Implementation}
-\dots
+\begin{enumerate}
+  \item {
+    We first started by collecting the data from dataset made by \citeauthor{xiong_shading_nodate}, then, we selected the animal of which we want to make a 3D representation.
+    In our case, we chose the cat image, one of the twenty input images can be observed in Figure \ref{fig:implementation:a}.
+  }
+
+  \item {
+    The second step involved calculating an estimate of the albedo, we did this by calculating the mean of the twenty light angles and applying a bilateral filter on it.
+    The result of this step can be seen in Figure \ref{fig:implementation:b}.
+  }
+
+  \item {
+    In the third step, we calculated different matrices to apply the constant albedo constraint.
+
+    \begin{enumerate}
+      \item {
+        We started by applying singular value decomposition.
+        This produced a matrix $\hat{I}$
+      }
+      \item{
+        From the matrix $\hat{I}$, we could derive $U'$, $W'$, and $V'^{T}$
+      }
+      \item {
+        Finally, we could use these to apply the constant albedo constraint.
+      }
+    \end{enumerate}
+  }
+
+  \item {
+    For the fourth step, we calculated the guide normal, the result is visible in \ref{fig:implementation:c}.
+    This part of the pipeline is not explained in the paper.
+  }
+
+  \item{
+    In the final step, we calculated the normal map.
+    This could then be used to make a 3D representation of the twenty 2D images.
+    The final output of the pipeline is presented in Figure \ref{fig:results}.
+  }
+\end{enumerate}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/cat.png}
+    \caption{Example of an image from the dataset, 20 different angles of light exist in the dataset.}
+    \label{fig:implementation:a}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/res-01-albedo.png}
+    \caption{The estimated albedo of 20 light angles.}
+    \label{fig:implementation:b}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/res-02-guidenormal.png}
+    \caption{The guide normal}
+    \label{fig:implementation:c}
+  \end{subfigure}
+
+  \caption{Parts of the pipeline visualized.}
+  \label{fig:implementation}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[t]{0.4\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/res-03-normalmap.png}
+    \label{fig:results:a}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.50\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/res-04-3d.png}
+    \label{fig:results:b}
+  \end{subfigure}\hfill
+
+  \caption{The 3D results visualized}
+  \label{fig:results}
+\end{figure}
+
 
 \section{Results}
 \dots
@@ -82,12 +167,15 @@ Coming soon
 
 \section{Reproducibility Checklist}
 \begin{itemize}
-  \item[\cboxchecked] Code provided \& documented
-  \item[\cbox] Data included
+  \item[\cbox] Code provided \& documented
+  \item[\cboxchecked] Data included
   \item[\cboxchecked] Environment included
-  \item[\cbox] Run instruction included
-  \item[\cbox] Random seeds
+  \item[\cboxchecked] Run instruction included
+  \item[\cboxchecked] Random seeds
   \item[\cbox] Expected outputs
+  \item[\cbox] Algorithm pseudo code included
 \end{itemize}
+
+\bibliography{sources}
 
 \end{document}
