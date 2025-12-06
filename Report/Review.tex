@@ -30,7 +30,7 @@
 \begin{document}
 
 \title{Group Work - Computer Vision}
-\subtitle{\textbf{Uncalibrated Photometric Stereo Constrained by Intrinsic Reﬂectance Image and Shape From Silhoutte}}
+\subtitle{\textbf{Uncalibrated Photometric Stereo Constrained by Intrinsic Reﬂectance Image and Shape From Silhoutte; A Reimplementation}}
 
 \author{Arthur Clarysse}
 \email{arthur.clarysse@vub.be}
@@ -66,55 +66,65 @@
 \maketitle
 
 \section{Summary}
-The reimplementation in this group project was based on the paper "\textit{Uncalibrated photometric stereo constrained by intrinsic reflectance image and shape from silhoutte}" by \citeauthor{hashimoto_uncalibrated_2019}
+The reimplementation in this group project was based on the paper "\textit{Uncalibrated photometric stereo constrained by intrinsic reflectance image and shape from silhoutte}" by \citeauthor{hashimoto_uncalibrated_2019}.
+In this paper, they try to estimate the surface normal, which in itself is not a very challenging problem,
+However, in our case, the direction of the light sources is unknown, making it much harder to solve.
+Mainly because of its ambiguous nature.
+Fortunately, it is possible to solve this problem by adding two constraints: the intrinsic reflection (albedo) and an approximate normal.
+This results in a reasonable estimate of the surface normal; the estimation and constraints are shown in Figure \ref{fig:overview}.
 
 The main goal of the original paper is to implement an uncalibrated photometric stereo pipeline that estimates surface normals from multiple images without prior knowledge of light directions.
-This pipeline first estimates the intrinsic reflectance (or albedo) and then calculates the guide normal \cite{hashimoto_uncalibrated_2019}.
+This pipeline first estimates the intrinsic reflectance (or albedo) and the estimated normal, which can be used as constraints.
+Finally, using the same matrices, we can calculate the guide normal and use it to make a 3d representation of the image.
 
 As a dataset, we use the photometric stereo dataset made by Harvard \cite{xiong_shading_nodate}.
 The dataset contains multiple shaded images of different animals, including cats, frogs, turtles, and more.
 To evaluate our results, we will calculate the average error of the estimated depth map with the actual results provided in the dataset.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{IMG/Overview.png}
+    \caption{Overview of the known and estimated parts of the paper}
+    \label{fig:overview}
+  \end{figure}
+
+\bigskip
 \section{Implementation}
+\subsection{Dataset \& Preprocessing}
+We first started by collecting the data from dataset made by \citeauthor{xiong_shading_nodate}, then, we selected the animal of which we want to make a 3D representation.
+In our case, we chose the cat image, one of the twenty input images can be observed in Figure \ref{fig:implementation:a}.
+
+\subsection{Albedo Estimation}
+After the preprocessing, step, we can estimate the albedo.
+To do this, we can start by calculating the average image, this results in an image where shades an shadows are reduced.
+Unfortunately, some shading effects remain, we can solve this by applying a bilateral filter.
+
+The result from this step is an estimated albedo, and is shown in Figure \ref{fig:implementation:b}.
+This result is still unusable in normal photometric stereo techniques, but fortunately, we can use the framework of uncalibrated photometric stereo to solve this.
+
+
+\subsection{Singular Value Decomposition}
+In this step, we want to calculate the true surface matrix and the true light matrix, $S$ and $L$ respectively.
+
 \begin{enumerate}
   \item {
-    We first started by collecting the data from dataset made by \citeauthor{xiong_shading_nodate}, then, we selected the animal of which we want to make a 3D representation.
-    In our case, we chose the cat image, one of the twenty input images can be observed in Figure \ref{fig:implementation:a}.
+    We start by calculating the shadow matrix $\hat{I}$ (intrinsic illumination matrix) by dividing an input image by the albedo.
+    \[
+      \hat{i}_{pf} = \frac{i_{pf}}{\hat{a}_p}
+    \]
+    With
+    \begin{itemize}
+      \item $i_{pf}$: The pixel $p$ of the image $f$
+      \item $\hat{a}_p$: The albedo of image $f$
+    \end{itemize}
+
+    This results in the shading image $\hat{I}$
   }
-
-  \item {
-    The second step involved calculating an estimate of the albedo, we did this by calculating the mean of the twenty light angles and applying a bilateral filter on it.
-    The result of this step can be seen in Figure \ref{fig:implementation:b}.
-  }
-
-  \item {
-    In the third step, we calculated different matrices to apply the constant albedo constraint.
-
-    \begin{enumerate}
-      \item {
-        We started by applying singular value decomposition.
-        This produced a matrix $\hat{I}$
-      }
-      \item{
-        From the matrix $\hat{I}$, we could derive $U'$, $W'$, and $V'^{T}$
-      }
-      \item {
-        Finally, we could use these to apply the constant albedo constraint.
-      }
-    \end{enumerate}
-  }
-
-  \item {
-    For the fourth step, we calculated the guide normal, the result is visible in \ref{fig:implementation:c}.
-    This part of the pipeline is not explained in the paper.
-  }
-
   \item{
-    In the final step, we calculated the normal map.
-    This could then be used to make a 3D representation of the twenty 2D images.
-    The final output of the pipeline is presented in Figure \ref{fig:results}.
+    ...
   }
 \end{enumerate}
+
 
 \begin{figure}[H]
   \centering
