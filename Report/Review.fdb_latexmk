@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Review"] 1765039492.94174 "Review.aux" "Review.bbl" "Review" 1765039494.68968 0
+["bibtex Review"] 1765113878.54179 "Review.aux" "Review.bbl" "Review" 1765113880.13388 0
   "./sources.bib" 1765020344.58167 2308 893bffbdfaa8cfbdd22931b415a07c9f ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1735764768 90749 48abc1cbed6fafc6fc31528e3aa606ca ""
-  "Review.aux" 1765039494.37478 3660 30ce5b66bb5ccc7333cbd97800b5bbc2 "pdflatex"
+  "Review.aux" 1765113879.84867 3706 773e1067361d4eae0bd0efde634188dc "pdflatex"
   (generated)
   "Review.bbl"
   "Review.blg"
   (rewritten before read)
-["pdflatex"] 1765039493.03997 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765039494.68985 0
-  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765039491.19462 6433 8bd490831bc1fd07fa9f51cac3224d2f ""
+["pdflatex"] 1765113878.63425 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765113880.13403 0
+  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765113876.86956 10428 7ef4297f8c910edb4c029712da1d2647 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc" 1490131464 2934 a4a9158faed2e9e89c771b4e3b7fc12f ""
@@ -70,6 +70,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/libertine/LinLibertineTB-tlf-t1.vf" 1490131464 1768 5d66dfd9709f1f38b8fb3cb38db46402 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/libertine/LinLibertineTI-tlf-t1.vf" 1490131464 1768 b3bfd8ed1fe2dce5fd19610abe4c3dbe ""
   "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/newtx/ntxsy.vf" 1724614892 1792 7cf99effbd74f7851ca7683a6d12b685 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/newtx/ntxsy7.vf" 1724614892 1940 bf4bac1135a7513fb45cfd9280176019 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/newtx/nxlmi.vf" 1569879884 2744 3e5ba39e1559219ae379b7645e2f9524 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/newtx/nxlmi7.vf" 1575323900 2740 2574d1692bc06933fa73eb18c93daedb ""
   "/usr/local/texlive/2025/texmf-dist/fonts/vf/public/newtx/nxlmia.vf" 1617586172 2252 bb868e02d533d88cf043058750d87c0b ""
@@ -213,10 +214,10 @@
   "IMG/res-02-guidenormal.png" 1765031681.1519 49056 4ac76f757099e89c4ea844d5edd33c3c ""
   "IMG/res-03-normalmap.png" 1765031682.49346 96921 bb283e69b4196028f925b926b19ea310 ""
   "IMG/res-04-3d.png" 1765031770.43574 106908 83d1f687eb86e7af52f0f885f841b7b8 ""
-  "Review.aux" 1765039494.37478 3660 30ce5b66bb5ccc7333cbd97800b5bbc2 "pdflatex"
-  "Review.bbl" 1765039493.03605 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
-  "Review.out" 1765039494.37562 1290 6e77357df474ad76a5f4fd6188cf0b81 "pdflatex"
-  "Review.tex" 1765039491.19462 6433 8bd490831bc1fd07fa9f51cac3224d2f ""
+  "Review.aux" 1765113879.84867 3706 773e1067361d4eae0bd0efde634188dc "pdflatex"
+  "Review.bbl" 1765113878.63148 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
+  "Review.out" 1765113879.84934 1709 70c459abe05309c1d16335ec5b34d2b7 "pdflatex"
+  "Review.tex" 1765113876.86956 10428 7ef4297f8c910edb4c029712da1d2647 ""
   (generated)
   "Review.aux"
   "Review.log"

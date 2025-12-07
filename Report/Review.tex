@@ -117,60 +117,124 @@ In this step, we want to calculate the true surface matrix and the true light ma
       \item $i_{pf}$: The pixel $p$ of the image $f$
       \item $\hat{a}_p$: The albedo of image $f$
     \end{itemize}
-
-    This results in the shading image $\hat{I}$
+    % \medskip
+    This results in the shading image $\hat{I}$ with on its $i$-axis the images and on its $j$-axis the pixels.
   }
+  \medskip
   \item{
-    ...
+    Then we can perform singular value decomposition froem which we can calculate the pseudo surface matrix $S'$ and pseudo light matrix $L'$.
+    \[
+      I = U'W'V'^T
+    \]
+    With
+    \begin{itemize}
+      \item $S' = U'$
+      \item $L' = W'V'^T$
+    \end{itemize}
+  }
+  \medskip
+  \item{
+    Finally, we can calculate the true surface matrix $S$ and true light matrix $L$ by disambiguting the matries using the ambiguity matrix $A$.
+    \[
+      \begin{aligned}
+        S &= S'A \\
+        L &= A^{-1}L'
+      \end{aligned}
+    \]
   }
 \end{enumerate}
 
+\subsection{Constant Albedo Constraint}
+In the shading images, the albedo has been divided out, so for pixels where our albedo estimate is reliable, the albedo should be constant (we normalise it to 1). Following the original paper, we use this idea to further reduce the ambiguity between the pseudo surface matrix $S'$ and the pseudo light matrix $L'$. 
+
+First, we only consider pixels whose estimated albedo $\hat{a}_p$ is larger than a threshold $T_a$, so that the division in the shading image is stable. For these pixels we know that the norm of the true surface vectors should be constant, i.e.\ the squared albedo is equal to one. We express the remaining ambiguity between $S'$ and $L'$ by a $3 \times 3$ matrix $A$ and write the true surface vectors as
+\[
+  s_p = A^\top s'_p.
+\]
+The squared norm of $s_p$ can be written as
+\[
+  \|s_p\|^2 = s_p^\top s_p 
+            = s_p^{\prime\top} B\, s'_p,
+\]
+where $B = AA^\top$ is a symmetric matrix with six unknown entries. Enforcing a constant albedo now becomes the constraint
+\[
+  s_p^{\prime\top} B\, s'_p = 1
+\]
+for all selected pixels. By expanding this equation for all pixels we obtain a linear system in the six unknown entries of $B$, which we solve in a least-squares sense.
+
+Once $B$ is known, we compute its eigenvalue (or singular value) decomposition and recover the ambiguity matrix $A$ by taking the square root of its eigenvalues. We then update the pseudo surface and light matrices as
+\[
+  S'' = S' A, \qquad L'' = A^{-1} L'.
+\]
+After this step, only a remaining orthogonal ambiguity is left between $S''$ and $L''$.
+
+\subsection{Guide Normal Constraint}
+Even after applying the constant albedo constraint, the solution is still ambiguous up to a global rotation. In other words, there exists an orthogonal matrix $R$ such that
+\[
+  S = S'' R, \qquad L = R^\top L'',
+\]
+and we still need to determine $R$. To resolve this last ambiguity, we use a coarse \emph{guide normal} that approximates the overall shape of the object.
+
+First, we detect the object region and its silhouette from the input images. From this silhouette we compute an approximate shape using simple image-based geometry, and from this shape we obtain a guide normal matrix $\tilde{S}$, which contains approximate surface normals for the same pixels as $S''$. These normals are not very accurate in the details, but they capture the global orientation and rough shape of the object.
+
+We then find an orthogonal matrix $R$ that best aligns the updated pseudo surface matrix $S''$ with the guide normals $\tilde{S}$. In practice, we solve
+\[
+  \tilde{S} \approx S'' R
+\]
+in a least-squares sense, and afterwards project $R$ onto the set of orthogonal matrices (for example via an SVD-based orthogonalisation). Finally, we obtain the true surface and light matrices as
+\[
+  S = S'' R, \qquad L = R^\top L''.
+\]
+
+In this way, the guide normal is only used to fix the remaining three degrees of freedom (a global rotation), so the global pose and coarse shape follow the guide normal, while the finer details of the surface are preserved from the uncalibrated photometric stereo solution.
 
 \begin{figure}[H]
   \centering
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
     \includegraphics[width=\linewidth]{IMG/cat.png}
-    \caption{Example of an image from the dataset, 20 different angles of light exist in the dataset.}
+    \caption{}
     \label{fig:implementation:a}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
     \includegraphics[width=\linewidth]{IMG/res-01-albedo.png}
-    \caption{The estimated albedo of 20 light angles.}
+    \caption{}
     \label{fig:implementation:b}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
     \includegraphics[width=\linewidth]{IMG/res-02-guidenormal.png}
-    \caption{The guide normal}
+    \caption{}
     \label{fig:implementation:c}
   \end{subfigure}
 
-  \caption{Parts of the pipeline visualized.}
+  \caption{Intermediate results of our uncalibrated photometric stereo pipeline: (a) input image, (b) estimated albedo, and (c) guide normal map}
   \label{fig:implementation}
 \end{figure}
+
+\section{Results}
+The output of the pipeline is the guide normal, which can easily be visualized, the results can be seen in Figure \ref{fig:results:a}.
+From this result, a height map can be made using the Frankot-Chellappa algorithm, this result is visible in Figure \ref{fig:results:b}.
 
 \begin{figure}[H]
   \centering
   \begin{subfigure}[t]{0.4\linewidth}
     \centering
     \includegraphics[width=\linewidth]{IMG/res-03-normalmap.png}
+    \caption{}
     \label{fig:results:a}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.50\linewidth}
     \centering
     \includegraphics[width=\linewidth]{IMG/res-04-3d.png}
+    \caption{}
     \label{fig:results:b}
   \end{subfigure}\hfill
 
   \caption{The 3D results visualized}
   \label{fig:results}
 \end{figure}
-
-
-\section{Results}
-\dots
 
 \section{Discussion}
 \dots
