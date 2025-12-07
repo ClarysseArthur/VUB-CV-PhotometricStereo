@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Review"] 1765113878.54179 "Review.aux" "Review.bbl" "Review" 1765113880.13388 0
+["bibtex Review"] 1765132257.49115 "Review.aux" "Review.bbl" "Review" 1765132259.34697 0
   "./sources.bib" 1765020344.58167 2308 893bffbdfaa8cfbdd22931b415a07c9f ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1735764768 90749 48abc1cbed6fafc6fc31528e3aa606ca ""
-  "Review.aux" 1765113879.84867 3706 773e1067361d4eae0bd0efde634188dc "pdflatex"
+  "Review.aux" 1765132259.05405 4142 b020912a2e49f43cfe84bcc940310a2b "pdflatex"
   (generated)
   "Review.bbl"
   "Review.blg"
   (rewritten before read)
-["pdflatex"] 1765113878.63425 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765113880.13403 0
-  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765113876.86956 10428 7ef4297f8c910edb4c029712da1d2647 ""
+["pdflatex"] 1765132257.58623 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765132259.34712 0
+  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765132255.61006 11554 675a802779b7f5d80d033b8d93ff77b0 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc" 1490131464 2934 a4a9158faed2e9e89c771b4e3b7fc12f ""
@@ -210,14 +210,20 @@
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "IMG/Overview.png" 1765036272.56302 330560 26147a371cd7985454a40a5ded2ddc97 ""
   "IMG/cat.png" 1765029790.40755 123523 9598c510ec5d8ef077216df81317516d ""
-  "IMG/res-01-albedo.png" 1765031680.59836 47710 ee4dbc6efacca6c83ad73068bda505fa ""
-  "IMG/res-02-guidenormal.png" 1765031681.1519 49056 4ac76f757099e89c4ea844d5edd33c3c ""
-  "IMG/res-03-normalmap.png" 1765031682.49346 96921 bb283e69b4196028f925b926b19ea310 ""
+  "IMG/ex-frog_res.png" 1765131739.76409 131650 56b374406e4c920cc524e0c150da7523 ""
+  "IMG/ex-frog_start.png" 1765131721.82321 65576 14cc136a4c3fdae81421d169d7c84a6c ""
+  "IMG/ex-liz_res.png" 1765118360.85631 81920 ade896284da7addb5a40fc82b96b3285 ""
+  "IMG/ex-liz_start.png" 1765118376.79875 50472 8167da5f2e654ed24740443ace023d00 ""
+  "IMG/ex-schol_res.png" 1765118433.77732 254790 1aad8503054daa395fd1d3f609b96a1b ""
+  "IMG/ex-schol_start.png" 1765118451.07503 107063 69b2688e7530931410d36b89ba684174 ""
+  "IMG/res-01-albedo.png" 1765131780.34316 47710 ee4dbc6efacca6c83ad73068bda505fa ""
+  "IMG/res-02-guidenormal.png" 1765131780.91774 49056 4ac76f757099e89c4ea844d5edd33c3c ""
+  "IMG/res-03-normalmap.png" 1765131782.27811 96921 bb283e69b4196028f925b926b19ea310 ""
   "IMG/res-04-3d.png" 1765031770.43574 106908 83d1f687eb86e7af52f0f885f841b7b8 ""
-  "Review.aux" 1765113879.84867 3706 773e1067361d4eae0bd0efde634188dc "pdflatex"
-  "Review.bbl" 1765113878.63148 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
-  "Review.out" 1765113879.84934 1709 70c459abe05309c1d16335ec5b34d2b7 "pdflatex"
-  "Review.tex" 1765113876.86956 10428 7ef4297f8c910edb4c029712da1d2647 ""
+  "Review.aux" 1765132259.05405 4142 b020912a2e49f43cfe84bcc940310a2b "pdflatex"
+  "Review.bbl" 1765132257.58325 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
+  "Review.out" 1765132259.05473 1709 bcf8d3d4bf0b3abc12f0e1c02922ed03 "pdflatex"
+  "Review.tex" 1765132255.61006 11554 675a802779b7f5d80d033b8d93ff77b0 ""
   (generated)
   "Review.aux"
   "Review.log"
