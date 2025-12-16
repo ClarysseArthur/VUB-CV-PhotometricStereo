@@ -86,7 +86,7 @@ The dataset contains multiple shaded images of different animals, including cats
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth]{IMG/Extra/Overview.png}
-  \caption{Overview of the known and estimated parts of the paper}
+  \caption{Overview of the known and estimated parts of the paper \cite{hashimoto_uncalibrated_2019}}
   \label{fig:overview}
 \end{figure}
 
@@ -565,6 +565,7 @@ This resulted in a well-commented working function described in Algorithm \ref{a
     \State \textbf{\# Mask background}
     \State $\mathbf{n}_g[p] \gets \mathbf{0}$ for all pixels $p$ with $\hat{\rho}[p] \le T_a$
 
+    \state \text{}
     \State \Return $\mathbf{n}_g$ \Comment{optionally also return $\mathbf{H}$ and $\mathbf{Z}$}
   \end{algorithmic}
 \end{algorithm}
