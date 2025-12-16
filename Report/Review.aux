@@ -14,37 +14,81 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Dataset \& Preprocessing}{1}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Albedo Estimation}{1}{subsection.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Singular Value Decomposition}{1}{subsection.2.3}\protected@file@percent }
+\citation{hashimoto_uncalibrated_2019}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Constant Albedo Constraint}{2}{subsection.2.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Guide Normal Constraint}{2}{subsection.2.5}\protected@file@percent }
-\newlabel{fig:implementation:a}{{2a}{2}{\relax }{figure.caption.2}{}}
-\newlabel{sub@fig:implementation:a}{{a}{2}{\relax }{figure.caption.2}{}}
-\newlabel{fig:implementation:b}{{2b}{2}{\relax }{figure.caption.2}{}}
-\newlabel{sub@fig:implementation:b}{{b}{2}{\relax }{figure.caption.2}{}}
-\newlabel{fig:implementation:c}{{2c}{2}{\relax }{figure.caption.2}{}}
-\newlabel{sub@fig:implementation:c}{{c}{2}{\relax }{figure.caption.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Intermediate results of our uncalibrated photometric stereo pipeline: (a) input image, (b) estimated albedo, and (c) guide normal map}}{2}{figure.caption.2}\protected@file@percent }
-\newlabel{fig:implementation}{{2}{2}{Intermediate results of our uncalibrated photometric stereo pipeline: (a) input image, (b) estimated albedo, and (c) guide normal map}{figure.caption.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{2}{section.3}\protected@file@percent }
-\newlabel{fig:results:a}{{3a}{2}{\relax }{figure.caption.3}{}}
-\newlabel{sub@fig:results:a}{{a}{2}{\relax }{figure.caption.3}{}}
-\newlabel{fig:results:b}{{3b}{2}{\relax }{figure.caption.3}{}}
-\newlabel{sub@fig:results:b}{{b}{2}{\relax }{figure.caption.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The 3D results visualized}}{2}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:results}{{3}{2}{The 3D results visualized}{figure.caption.3}{}}
+\newlabel{sec:guidenormalconstraint}{{2.5}{2}{Guide Normal Constraint}{subsection.2.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Constructing the Image Matrix}{3}{subsection.2.6}\protected@file@percent }
+\newlabel{fig:implementation:albedo}{{2a}{3}{\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:implementation:albedo}{{a}{3}{\relax }{figure.caption.2}{}}
+\newlabel{fig:implementation:silhouette}{{2b}{3}{\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:implementation:silhouette}{{b}{3}{\relax }{figure.caption.2}{}}
+\newlabel{fig:implementation:shape}{{2c}{3}{\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:implementation:shape}{{c}{3}{\relax }{figure.caption.2}{}}
+\newlabel{fig:implementation:guidenormal}{{2d}{3}{\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:implementation:guidenormal}{{d}{3}{\relax }{figure.caption.2}{}}
+\newlabel{fig:implementation:depthmap}{{2e}{3}{\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:implementation:depthmap}{{e}{3}{\relax }{figure.caption.2}{}}
+\newlabel{fig:implementation:normalmap}{{2f}{3}{\relax }{figure.caption.2}{}}
+\newlabel{sub@fig:implementation:normalmap}{{f}{3}{\relax }{figure.caption.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Intermediate results of our uncalibrated photometric stereo pipeline: (a) estimated albedo, (b) estimated silhouette, (c) estimated approximate shape, (d) estimated guide normal, (e) estimated depth map, and (f) estimated normal map.}}{3}{figure.caption.2}\protected@file@percent }
+\newlabel{fig:implementation}{{2}{3}{Intermediate results of our uncalibrated photometric stereo pipeline: (a) estimated albedo, (b) estimated silhouette, (c) estimated approximate shape, (d) estimated guide normal, (e) estimated depth map, and (f) estimated normal map}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Qualitative Results}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{fig:results:a}{{3a}{3}{\relax }{figure.caption.3}{}}
+\newlabel{sub@fig:results:a}{{a}{3}{\relax }{figure.caption.3}{}}
+\newlabel{fig:results:b}{{3b}{3}{\relax }{figure.caption.3}{}}
+\newlabel{sub@fig:results:b}{{b}{3}{\relax }{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The result of the pipeline, showing (a) the estimated normal map and (b) a 3D reconstruction obtained from the estimated normal map using the Frankot-Chellappa algorithm.}}{3}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:results}{{3}{3}{The result of the pipeline, showing (a) the estimated normal map and (b) a 3D reconstruction obtained from the estimated normal map using the Frankot-Chellappa algorithm}{figure.caption.3}{}}
+\newlabel{fig:result:albedo-scholar}{{4a}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:albedo-scholar}{{a}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:albedo-lizard}{{4b}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:albedo-lizard}{{b}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:albedo-frog}{{4c}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:albedo-frog}{{c}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:guidenormal-scholar}{{4d}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:guidenormal-scholar}{{d}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:guidenormal-lizard}{{4e}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:guidenormal-lizard}{{e}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:guidenormal-frog}{{4f}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:guidenormal-frog}{{f}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:normal-map-scholar}{{4g}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:normal-map-scholar}{{g}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:normal-map-lizard}{{4h}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:normal-map-lizard}{{h}{4}{\relax }{figure.caption.4}{}}
+\newlabel{fig:result:normal-map-frog}{{4i}{4}{\relax }{figure.caption.4}{}}
+\newlabel{sub@fig:result:normal-map-frog}{{i}{4}{\relax }{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Results for \textit  {scholar}, \textit  {lizard}, and \textit  {frog} as inputs to the pipeline, showing (a-c) the albedo estimates, (d-f) the guide-normal estimates, and (g-i) the normal maps.}}{4}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:results}{{4}{4}{Results for \textit {scholar}, \textit {lizard}, and \textit {frog} as inputs to the pipeline, showing (a-c) the albedo estimates, (d-f) the guide-normal estimates, and (g-i) the normal maps}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Quantitative Results}{4}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{4}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Threshold $T_a$}{4}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Binned albedo values using 256 bins, with the chosen threshold marked by the red vertical line. Clearly, the initial peak corresponds to low-albedo background pixels, while the distribution at higher values captures the object region.}}{4}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:threshold}{{5}{4}{Binned albedo values using 256 bins, with the chosen threshold marked by the red vertical line. Clearly, the initial peak corresponds to low-albedo background pixels, while the distribution at higher values captures the object region}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Guide Normal Constraint}{4}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}General}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Reproducibility Checklist}{4}{section.5}\protected@file@percent }
 \bibdata{sources}
 \bibcite{hashimoto_uncalibrated_2019}{{1}{2019}{{Hashimoto et~al\mbox  {.}}}{{}}}
 \bibcite{xiong_shading_nodate}{{2}{[n.\,d.]}{{Xiong et~al\mbox  {.}}}{{}}}
 \newlabel{tocindent-1}{0pt}
 \newlabel{tocindent0}{0pt}
-\newlabel{tocindent1}{4.185pt}
+\newlabel{tocindent1}{6.25499pt}
 \newlabel{tocindent2}{10.34999pt}
 \newlabel{tocindent3}{0pt}
 \newlabel{tocindent4}{0pt}
 \newlabel{tocindent5}{0pt}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Examples of the algorithm with the top row (a, b, c) being one of the twenty input images, and the bottom row (d, e, f) the results.}}{3}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:examples}{{4}{3}{Examples of the algorithm with the top row (a, b, c) being one of the twenty input images, and the bottom row (d, e, f) the results}{figure.caption.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{3}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Reproducibility Checklist}{3}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{3}{section*.6}\protected@file@percent }
-\newlabel{TotPages}{{3}{3}{}{page.3}{}}
-\gdef \@abspage@last{3}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Guide Normal Calculations}{5}{appendix.A}\protected@file@percent }
+\newlabel{eq:guidenormal}{{25}{5}{Guide Normal Calculations}{equation.25}{}}
+\newlabel{eq:norm}{{26}{5}{Guide Normal Calculations}{equation.26}{}}
+\newlabel{eq:normalized_guidenormal}{{27}{5}{Guide Normal Calculations}{equation.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Pseudo Code for Guide Normal Constraint}{5}{appendix.B}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Compute guide normal from albedo estimate}}{5}{algorithm.1}\protected@file@percent }
+\newlabel{alg:guide-normal}{{1}{5}{Compute guide normal from albedo estimate}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}A Schematic Overview}{5}{appendix.C}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces A schematic overview of the pipeline}}{5}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:schem}{{6}{5}{A schematic overview of the pipeline}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {section}{References}{5}{section*.8}\protected@file@percent }
+\newlabel{TotPages}{{5}{5}{}{page.5}{}}
+\gdef \@abspage@last{5}

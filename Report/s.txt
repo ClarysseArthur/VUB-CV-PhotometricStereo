@@ -1,0 +1,10 @@
+https://web.stanford.edu/class/cs273/refs/procrustes.pdf
+https://graphics.stanford.edu/courses/cs164-09-spring/Handouts/paper_Umeyama.pdf
+https://onlinelibrary.wiley.com/doi/pdf/10.1107/S0567739476001873
+https://faculty.kfupm.edu.sa/math/jaafarm/lec-notes/Moore-Pinrose.pdf
+https://www.cs.cornell.edu/~dph/papers/dt.pdf
+https://www.csd.uwo.ca/~oveksler/Courses/Fall2009/9840/Chosen/linearExactEucl.pdf
+https://people.cmm.minesparis.psl.eu/users/marcoteg/cv/publi_pdf/MM_refs/1986_Borgefors_distance.pdf
+https://www.sciencedirect.com/science/article/pii/0146664X80900544
+https://people.csail.mit.edu/bkph/AIM/AIM-1105-OPT.pdf
+https://www.microsoft.com/en-us/research/wp-content/uploads/1978/01/p286-blinn.pdf
