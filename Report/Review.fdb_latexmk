@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Review"] 1765879467.56114 "Review.aux" "Review.bbl" "Review" 1765879469.76927 0
+["bibtex Review"] 1765879467.56114 "Review.aux" "Review.bbl" "Review" 1765955787.97778 0
   "./sources.bib" 1765020344.58167 2308 893bffbdfaa8cfbdd22931b415a07c9f ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1735764768 90749 48abc1cbed6fafc6fc31528e3aa606ca ""
-  "Review.aux" 1765879469.44663 9458 1ab9eeeb44153b6cc7b69e9794345e72 "pdflatex"
+  "Review.aux" 1765955787.65096 9458 1ab9eeeb44153b6cc7b69e9794345e72 "pdflatex"
   (generated)
   "Review.bbl"
   "Review.blg"
   (rewritten before read)
-["pdflatex"] 1765879467.65378 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765879469.76941 0
-  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765879465.2361 23388 fe4995f29342c22de4b76bb981a75735 ""
+["pdflatex"] 1765955785.83728 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765955787.97794 0
+  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765955785.72369 23388 3f6b113674e03364368d808d1766b097 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc" 1490131464 2934 a4a9158faed2e9e89c771b4e3b7fc12f ""
@@ -250,10 +250,10 @@
   "IMG/Results/res-05-normal-map-lizard.png" 1765877383.70814 117026 be858b1ee06e464028287e38fd1d104c ""
   "IMG/Results/res-05-normal-map-scholar.png" 1765877351.20068 185289 153f2ef9d1f2313398ca264b1a505496 ""
   "IMG/Results/res-3d.png" 1765795867.65956 177325 e9e18063e56b44e62f631a821cf72366 ""
-  "Review.aux" 1765879469.44663 9458 1ab9eeeb44153b6cc7b69e9794345e72 "pdflatex"
+  "Review.aux" 1765955787.65096 9458 1ab9eeeb44153b6cc7b69e9794345e72 "pdflatex"
   "Review.bbl" 1765879467.6503 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
-  "Review.out" 1765879469.44744 3390 a808039d2e36ed0762d53c12e98a5b32 "pdflatex"
-  "Review.tex" 1765879465.2361 23388 fe4995f29342c22de4b76bb981a75735 ""
+  "Review.out" 1765955787.65189 3390 a808039d2e36ed0762d53c12e98a5b32 "pdflatex"
+  "Review.tex" 1765955785.72369 23388 3f6b113674e03364368d808d1766b097 ""
   (generated)
   "Review.aux"
   "Review.log"

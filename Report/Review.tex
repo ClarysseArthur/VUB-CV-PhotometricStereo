@@ -545,28 +545,28 @@ This resulted in a well-commented working function described in Algorithm \ref{a
   \label{alg:guide-normal}
   \begin{algorithmic}[1]
     \Require Albedo estimate $\hat{\rho}$, threshold $T_a$
-    \Ensure Guide normal map $\mathbf{n}_g$ (and optional intermediate outputs)
+    \Ensure Guide normal map $\mathbf{N}_g$ (and optional intermediate outputs)
 
-    \State \textbf{\# Silhouette from albedo}
+    \State \textbf{1. Silhouette from albedo}
     \State $\mathbf{H} \gets \mathbb{1}[\hat{\rho} > T_a]$ \Comment{binary mask of the object}
     
     \state \text{}
-    \State \textbf{\# Approximate shape from silhouette}
+    \State \textbf{2. Approximate shape from silhouette}
     \State $\mathbf{Z} \gets \textsc{DistanceTransform}(\mathbf{H})$ \Comment{height-like map (higher near center)}
     \State $\mathbf{Z} \gets \textsc{Normalize}(\mathbf{Z})$ \Comment{scale to a bounded range}
 
     \state \text{}
-    \State \textbf{\# Convert shape to normals}
+    \State \textbf{3. Convert shape to normals}
     \State $(\partial_y \mathbf{Z},\, \partial_x \mathbf{Z}) \gets \textsc{Gradient}(\mathbf{Z})$
-    \State $\mathbf{n}_g \gets \textsc{Stack}(-\partial_x \mathbf{Z},\, -\partial_y \mathbf{Z},\, \mathbf{1})$
-    \State $\mathbf{n}_g \gets \textsc{UnitNormalize}(\mathbf{n}_g)$
+    \State $\mathbf{N}_g \gets \textsc{Stack}(-\partial_x \mathbf{Z},\, -\partial_y \mathbf{Z},\, \mathbf{1})$
+    \State $\mathbf{N}_g \gets \textsc{UnitNormalize}(\mathbf{N}_g)$
 
     \state \text{}
-    \State \textbf{\# Mask background}
-    \State $\mathbf{n}_g[p] \gets \mathbf{0}$ for all pixels $p$ with $\hat{\rho}[p] \le T_a$
+    \State \textbf{4. Mask background}
+    \State $\mathbf{N}_g[p] \gets \mathbf{0}$ for all pixels $p$ with $\hat{\rho}[p] \le T_a$
 
     \state \text{}
-    \State \Return $\mathbf{n}_g$ \Comment{optionally also return $\mathbf{H}$ and $\mathbf{Z}$}
+    \State \Return $\mathbf{N}_g$ \Comment{optionally also return $\mathbf{H}$ and $\mathbf{Z}$}
   \end{algorithmic}
 \end{algorithm}
 
