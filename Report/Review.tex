@@ -58,7 +58,7 @@
   \city{Brussels}
   \country{Belgium}
 }
-\authornote{Student number: \dots}
+\authornote{Student number: 0618147}
 
 \pagestyle{plain}
 
@@ -69,16 +69,16 @@
 \maketitle
 
 \section{Summary}
-The reimplementation in this group project was based on the paper "\textit{Uncalibrated photometric stereo constrained by intrinsic reflectance image and shape from silhoutte}" by \citeauthor{hashimoto_uncalibrated_2019}.
+The reimplementation in this group project was based on the paper "\textit{Uncalibrated photometric stereo constrained by intrinsic reflectance image and shape from silhoutte}" by \citep{hashimoto_uncalibrated_2019}.
 In this paper, they try to estimate the surface normal, which in itself is not a very challenging problem,
 However, in our case, the direction of the light sources is unknown, making it much harder to solve.
 Mainly because of its ambiguous nature.
-Fortunately, it is possible to solve this problem by adding two constraints: the intrinsic reflection (albedo) and an approximate normal.
-This results in a reasonable estimate of the surface normal; the estimation and constraints are shown in Figure \ref{fig:overview}.
+Fortunately, it is possible to solve this problem by adding two constraints: the intrinsic reflection (albedo) constraint and an approximate normal constraint.
+This results in a reasonable estimate of the surface normal; an overview of the estimations and constraints are shown in Figure \ref{fig:overview}.
 
 The main goal of the original paper is to implement an uncalibrated photometric stereo pipeline that estimates surface normals from multiple images without prior knowledge of light directions.
-This pipeline first estimates the intrinsic reflectance (or albedo) and the estimated normal, which can be used as constraints.
-Finally, using the same matrices, we can calculate the guide normal and use it to make a 3d representation of the image.
+This pipeline first estimates the intrinsic reflectance (or albedo) and the estimated normal, which are later used to calculate the constraints.
+Finally, we can calculate the guide normal and use it to make a 3d representation of the image.
 
 As a dataset, we use the photometric stereo dataset made by Harvard \cite{xiong_shading_nodate}.
 The dataset contains multiple shaded images of different animals, including cats, frogs, turtles, and more.
@@ -93,38 +93,41 @@ The dataset contains multiple shaded images of different animals, including cats
 \bigskip
 \section{Implementation}
 \subsection{Dataset \& Preprocessing}
-We first collected data from the dataset by \citeauthor{xiong_shading_nodate}, then selected the object we wanted to create a 3D representation of.
-In our case, we chose the cat image; one of the twenty input images can be observed in Figure \ref{fig:implementation:a}.
+We first collected data from the dataset by \citep{xiong_shading_nodate}, then selected the object we wanted to create a 3D representation of.
+In our case, we chose the cat image, we did not perform any preprocessing steps.
 
 \subsection{Albedo Estimation}
 After preprocessing, we can estimate the albedo.
 To do this, we can start by calculating the average image; this results in an image with reduced shading and shadows.
 Unfortunately, some shading effects remain; we can solve this by applying a bilateral filter.
 
-The result from this step is an estimated albedo, and is shown in Figure \ref{fig:implementation:albedo}.
-This result is still unusable in standard photometric stereo techniques, but fortunately, we can use the uncalibrated photometric stereo framework to address this.
+The result from this step is the estimated albedo, and is shown in Figure \ref{fig:implementation:albedo}.
+This result is still unusable in standard photometric stereo techniques because of its ambiguities, but fortunately, we can use the uncalibrated photometric stereo framework to address this.
 
 
 \subsection{Singular Value Decomposition}
 The purpose of the pipeline is to find the true surface matrix and the true light matrix, $\mathbf{S}$ and $\mathbf{L}$ respectively.
 To find these matrices, we start by creating the shading (intrinsic illumination) matrix by dividing the image $i_f$ by the albedo values $\hat{a}$ above the threshold $T_a$:
 \begin{equation}
- \hat{i}_{pf} = \frac{i_{pf}}{\hat{a}_p},
- \qquad \text{for all pixels } p \text{ with } \hat{a}_p > T_a.
+  \hat{i}_{pf} = \frac{i_{pf}}{\hat{a}_p},
+  \qquad \text{for all pixels } p \text{ with } \hat{a}_p > T_a
 \end{equation}
+
 Stacking the $\hat{P}$ valid pixels over all $F$ images yields the shading matrix $\hat{\mathbf{I}} \in \mathbb{R}^{\hat{P}\times F}$.
 We then apply SVD to the shading matrix $\hat{\mathbf{I}}$:
 \begin{equation}
- \hat{\mathbf{I}} = \mathbf{U}\mathbf{W}\mathbf{V}^\top.
+  \hat{\mathbf{I}} = \mathbf{U}\mathbf{W}\mathbf{V}^\top.
 \end{equation}
-Keeping only the three largest singular values gives the rank-3 approximation
+
+Keeping only the three largest singular values gives the rank-3 approximation, one rank for every dimension in the 3D space.
 \begin{equation}
- \hat{\mathbf{I}} \approx \mathbf{U}'\mathbf{W}'{\mathbf{V}'}^\top,
+  \hat{\mathbf{I}} \approx \mathbf{U}'\mathbf{W}'{\mathbf{V}'}^\top
 \end{equation}
-from which we define the pseudo surface and pseudo light matrices as
+
+From which we define the pseudo surface and pseudo light matrices as
 \begin{align}
- \mathbf{S}' &= \mathbf{U}' \in \mathbb{R}^{\hat{P}\times 3} \\\
- \mathbf{L}' &= \mathbf{W}'{\mathbf{V}'}^\top \in \mathbb{R}^{3\times F}
+  \mathbf{S}' &= \mathbf{U}' \in \mathbb{R}^{\hat{P}\times 3} \\
+  \mathbf{L}' &= \mathbf{W}'{\mathbf{V}'}^\top \in \mathbb{R}^{3\times F}
 \end{align}
 
 \newpage
@@ -134,8 +137,8 @@ First, we have that the SVD factorization $\mathbf{\hat{I}} = \mathbf{SL}$ is no
 For any invertible $3 \times 3$ matrix $\mathbf{A}$, $\mathbf{SA}$ and $\mathbf{A}^{-1}\mathbf{L}$ produce the same image matrix, so $\mathbf{S}$ and $\mathbf{L}$ are only defined up to an arbitrary linear transformation.
 This ambiguity can be resolved by using the constant albedo constraint.
 
-Second, we have that --- even when using the albedo constraint ---, an orthogonal (rotation) ambiguity $R$ exists.
-For any orthogonal $3\times 3$ matrix $\mathbf{R}$, $\mathbf{SR}$ and $\mathbf{R}^\top \mathbf{L}$ also produce the same image matrix, so $\mathbf{S}$ and $\mathbf{R}$ are still only defined up to a global rotation.
+Second, we have that --- even when using the albedo constraint ---, an orthogonal (rotation) ambiguity $\mathbf{R}$ exists.
+For any orthogonal $3\times 3$ matrix $\mathbf{L}$, $\mathbf{SR}$ and $\mathbf{R}^\top \mathbf{L}$ also produce the same image matrix, so $\mathbf{S}$ and $\mathbf{R}$ are still only defined up to a global rotation.
 When the second ambiguity is resolved by using the guide normal constraint, we are left with only one solution for the scaled normals.
 
 
@@ -143,179 +146,181 @@ When the second ambiguity is resolved by using the guide normal constraint, we a
 We can calculate the true surface matrix $\mathbf{S}$ and true light matrix $\mathbf{L}$ by disambiguating the matrices using the ambiguity matrix $\mathbf{A}$.
 \begin{equation}
   \begin{aligned}
- \mathbf{S} &= \mathbf{S}'\mathbf{A} \\
- \mathbf{L} &= \mathbf{A}^{-1}\mathbf{L}'
+    \mathbf{S} &= \mathbf{S}'\mathbf{A} \\
+    \mathbf{L} &= \mathbf{A}^{-1}\mathbf{L}'
   \end{aligned}
 \end{equation}
 
 The following steps show how to calculate $\mathbf{A}$:
 \begin{enumerate}
   \item {
- We start by defining the matrix $\mathbf{C}$ and vector $\mathbf{b}$:
+    We start by defining the matrix $\mathbf{C}$ and vector $\mathbf{b}$:
     \begin{equation}
       \begin{aligned}
- \mathbf{C} &= 
+        \mathbf{C} &= 
         \begin{bmatrix}
- s'^2_{x1} & s'^2_{y1} & s'^2_{z1} & 2s'_{x1}s'_{y1} & 2s'_{y1}s'_{z1} & 2s'_{z1}s'_{x1} \\
- s'^2_{x2} & s'^2_{y2} & s'^2_{z2} & 2s'_{x2}s'_{y2} & 2s'_{y2}s'_{z2} & 2s'_{z2}s'_{x2} \\
+          s'^2_{x1} & s'^2_{y1} & s'^2_{z1} & 2s'_{x1}s'_{y1} & 2s'_{y1}s'_{z1} & 2s'_{z1}s'_{x1} \\
+          s'^2_{x2} & s'^2_{y2} & s'^2_{z2} & 2s'_{x2}s'_{y2} & 2s'_{y2}s'_{z2} & 2s'_{z2}s'_{x2} \\
           \vdots    & \vdots    & \vdots    & \vdots          & \vdots          & \vdots          \\
- s'^2_{x\hat{P}} & s'^2_{y\hat{P}} & s'^2_{z\hat{P}} & 2s'_{x\hat{P}}s'_{y\hat{P}} & 2s'_{y\hat{P}}s'_{z\hat{P}} & 2s'_{z\hat{P}}s'_{x\hat{P}}
+          s'^2_{x\hat{P}} & s'^2_{y\hat{P}} & s'^2_{z\hat{P}} & 2s'_{x\hat{P}}s'_{y\hat{P}} & 2s'_{y\hat{P}}s'_{z\hat{P}} & 2s'_{z\hat{P}}s'_{x\hat{P}}
         \end{bmatrix} \\
- \mathbf{b} &=
+        \mathbf{b} &=
         \begin{bmatrix}
- b_1 & b_2 & b_3 & b_4 & b_5 & b_6
+          b_1 & b_2 & b_3 & b_4 & b_5 & b_6
         \end{bmatrix}^\top
       \end{aligned}
     \end{equation}
- Such that
+    Such that
     \begin{align}
- \mathbf{C}\mathbf{b} &= \mathbf{1} \\
- \mathbf{b} &= \mathbf{C}^+\mathbf{1} 
+      \mathbf{C}\mathbf{b} &= \mathbf{1} \\
+      \mathbf{b} &= \mathbf{C}^+\mathbf{1} 
     \end{align}
- With
+    With
     \begin{itemize}
-      \item $\hat{P}$: The number of pixels for which the albedo value is larger than a certain threshold $T_a$.
-      \item $\mathbf{C}^+$: The pseudo-inverse of $\mathbf{C}$.
+      \item $\hat{P}$: The number of pixels for which the albedo value is larger than a certain threshold $T_a$
+      \item $\mathbf{C}^+$: The pseudo-inverse of $\mathbf{C}$
       \item $1 = 1_{\hat{P}}$ (a column vector of $\hat{P}$ ones)
     \end{itemize}
- }
+  }
   \medskip
   \item{
- Now we can define the symmetric matrix $\mathbf{B}$:
+    Now we can define the symmetric matrix $\mathbf{B}$:
     \begin{equation}
- \mathbf{B} = \mathbf{AA}^\top = 
+      \mathbf{B} = \mathbf{AA}^\top = 
       \begin{bmatrix}
- b_1 & b_4 & b_6 \\
- b_4 & b_2 & b_5 \\
- b_6 & b_5 & b_3 \\
+        b_1 & b_4 & b_6 \\
+        b_4 & b_2 & b_5 \\
+        b_6 & b_5 & b_3 \\
       \end{bmatrix}
     \end{equation}
- With
+    With
     \begin{itemize}
       \item $b_i \in \mathbf{b}$
     \end{itemize}
     \medskip
- Performing singular value decomposition on $\mathbf{B}$ results in:
+      Performing singular value decomposition on $\mathbf{B}$ results in:
     \begin{equation}
- \mathbf{B} = \mathbf{U}_B\mathbf{W}_B\mathbf{U}_B^\top
+      \mathbf{B} = \mathbf{U}_B\mathbf{W}_B\mathbf{U}_B^\top
     \end{equation}
- }
+  }
   \medskip
   \item {
- As a result, we can calculate the ambiguity matrix as follows:
+    As a result, we can calculate the ambiguity matrix as follows:
     \begin{equation}
- \mathbf{A} = \mathbf{U}_B\mathbf{W}^{\frac{1}{2}}_B
+      \mathbf{A} = \mathbf{U}_B\mathbf{W}^{\frac{1}{2}}_B
     \end{equation}
- }
+  }
   \newpage
   \item {
- Finally, we can update the pseudo light and surface matrices as follows:
+    Finally, we can update the pseudo light and surface matrices as follows:
     \begin{equation}
-    \begin{aligned}
- \mathbf{S}'' &= \mathbf{S}'\mathbf{A} \\
- \mathbf{L}'' &= \mathbf{A}^{-1}\mathbf{L}'
-    \end{aligned}
-  \end{equation}
- }
+      \begin{aligned}
+        \mathbf{S}'' &= \mathbf{S}'\mathbf{A} \\
+        \mathbf{L}'' &= \mathbf{A}^{-1}\mathbf{L}'
+      \end{aligned}
+    \end{equation}
+  }
 \end{enumerate}
 Note that $\mathbf{A}$ is only determined up to an orthogonal factor, leaving a residual rotation ambiguity that is resolved by the guide normal constraint.
 
 \subsection{Guide Normal Constraint}\label{sec:guidenormalconstraint}
 The original paper by \citet{hashimoto_uncalibrated_2019} does not explicitly explain how the guide normal is calculated.
-However, to complete the pipeline, we added this step to finalize it.
+However, to complete the pipeline, we needed to add this step.
 
 To remove the final ambiguity, we can use the orthogonal matrix $\mathbf{R}$.
 We can formulate the true surface and light matrices in terms of $\mathbf{R}$ and the pseudo surface matrix $\mathbf{S}''$ and pseudo light matrix $\mathbf{L}''$ that we obtained in the previous section:
 \begin{equation}
   \begin{aligned}
- \mathbf{S} &= \mathbf{S}''\mathbf{R} \\
- \mathbf{L} &= \mathbf{R}^\top\mathbf{L}''
+    \mathbf{S} &= \mathbf{S}''\mathbf{R} \\
+    \mathbf{L} &= \mathbf{R}^\top\mathbf{L}''
   \end{aligned}
 \end{equation}
 
 \begin{enumerate}
   \item {
- We begin by computing the silhouette image $\mathbf{H}$ (Figure \ref{fig:implementation:silhouette}) by detecting the object's boundary pixels in the image.
- This silhouette is a binary mask in which values above the albedo threshold $T_a$ are set to 1, and those below are set to 0.
+  We begin by computing the silhouette image $\mathbf{H}$ (Figure \ref{fig:implementation:silhouette}) by detecting the object's boundary pixels in the image.
+  This silhouette is a binary mask in which values above the albedo threshold $T_a$ are set to 1, and those below are set to 0.
+  \begin{equation}
+    \mathbf{H}(p)=
+    \begin{cases}
+      1, & \hat{a}_p > T_a \\
+      0, & otherwise
+    \end{cases} 
+  \end{equation}
+ 
+  With
+  \begin{itemize}
+    \item $\mathbf{H}$: The silhouette image with pixels $p$
+    \item $\hat{a}_p$: The albedo estimate of the pixel $p$
+    \item $T_a$: The threshold
+  \end{itemize}
+  }
+  \medskip
+  \item {
+    Then we can compute the approximate shape $\tilde{\mathbf{H}}$ (Figure \ref{fig:implementation:shape}) from the silhouette image; this shape is a height map where the center of the image is high (e.g., 1) and the edges are low (e.g., 0).
+    This step can be performed using the distance transform of $\textbf{H}$.
+  }
+  \medskip
+  \item {
+    The approximate shape is then normalized to prevent extreme gradients; the range 0 to $\frac{\text{image width}}{2}$ is used for this step.
+  }
+  \medskip
+  \item {
+    The next step involves taking the gradient of the approximate shape $\tilde{\mathbf{H}}$:
     \begin{equation}
- \mathbf{H}(p)=
-      \begin{cases}
-        1, & \hat{a}_p > T_a \\
-        0, & otherwise
-      \end{cases} 
+      \left(\frac{\partial \tilde{\mathbf{H}}}{\partial y},\ \frac{\partial \tilde{\mathbf{H}}}{\partial x}\right)
+      = \nabla \tilde{\mathbf{H}}.
     \end{equation}
- With
-    \begin{itemize}
-      \item $\mathbf{H}$: The silhouette image with pixels $p$.
-      \item $\hat{a}_p$: The albedo estimate of the pixel $p$.
-      \item $T_a$: The threshold
-    \end{itemize}
- }
+  }
   \medskip
   \item {
- Then we can compute the approximate shape $\tilde{\mathbf{H}}$ (Figure \ref{fig:implementation:shape}) from the silhouette image; this shape is a height map where the center of the image is high (e.g., 1) and the edges are low (e.g., 0).
- This step can be performed using the distance transform of $\textbf{H}$.
- }
-  \medskip
-  \item {
- The approximate shape is then normalized to prevent extreme gradients; the range 0 to $\frac{\text{image width}}{2}$ is used for this step.
- }
-  \medskip
-  \item {
- The next step involves taking the gradient of the approximate shape $\tilde{\mathbf{H}}$:
-    \begin{equation}
- \left(\frac{\partial \tilde{\mathbf{H}}}{\partial y},\ \frac{\partial \tilde{\mathbf{H}}}{\partial x}\right)
- = \nabla \tilde{\mathbf{H}}.
-    \end{equation}
- }
-  \medskip
-  \item {
- Now, we can calculate the guide normal $\tilde{\mathbf{S}}$ (Figure \ref{fig:implementation:guidenormal}) from the estimated height map $\tilde{\textbf{H}}$ by stacking the components (Equation \ref{eq:guidenormal}).
- We then normalize each normal vector to unit length by dividing by its $\ell_2$-norm (Equation \ref{eq:norm}) and skipping divisions by zero (Equation \ref{eq:normalized_guidenormal}).    
- }
+    Now, we can calculate the guide normal $\tilde{\mathbf{S}}$ (Figure \ref{fig:implementation:guidenormal}) from the estimated height map $\tilde{\textbf{H}}$ by stacking the components (Equation \ref{eq:guidenormal}).
+    We then normalize each normal vector to unit length by dividing by its $\ell_2$-norm (Equation \ref{eq:norm}) and skipping divisions by zero (Equation \ref{eq:normalized_guidenormal}).    
+  }
   \newpage
   \medskip
   \item {
- With the pseudo matrix $\tilde{\mathbf{S}}$ calculated, we can calculate the ambiguity orthogonal matrix $\mathbf{R}$:
+    With the guide normal $\tilde{\mathbf{S}}$ calculated, we can calculate the ambiguity orthogonal matrix $\mathbf{R}$:
     \begin{equation}
- \mathbf{R} = \mathbf{S}''^+ \tilde{\mathbf{S}}
+      \mathbf{R} = \mathbf{S}''^+ \tilde{\mathbf{S}}
     \end{equation}
- Using the following relation:
+
+    Using the following relation:
     \begin{equation}
- \tilde{\mathbf{S}} = \mathbf{S}'' \mathbf{R}
+      \tilde{\mathbf{S}} = \mathbf{S}'' \mathbf{R}
     \end{equation}
- }
+  }
   \item {
- We can orthogonalize the matrix $\mathbf{R}$ into $\tilde{\mathbf{R}}$ as follows:
+    We can orthogonalize the matrix $\mathbf{R}$ into $\tilde{\mathbf{R}}$ as follows:
     \begin{align}
- \mathbf{R} = \mathbf{U}_R \mathbf{W}_R \mathbf{V}^\top_R
- \tilde{\mathbf{R} } = \mathbf{U}_R \mathbf{V}^\top_R
+      \mathbf{R} &= \mathbf{U}_R \mathbf{W}_R \mathbf{V}^\top_R \\
+      \tilde{\mathbf{R} } &= \mathbf{U}_R \mathbf{V}^\top_R
     \end{align}
  }
   \item {
- After orthogonalizing $\mathbf{R}$ into $\tilde{\mathbf{R}}$, the final true light and surface matrices --- $\mathbf{L}$ and $\mathbf{S}$ respectively --- can be calculated:
+    After orthogonalizing $\mathbf{R}$ into $\tilde{\mathbf{R}}$, the final true surface and light matrices --- $\mathbf{S}$ and $\mathbf{L}$ respectively --- can be calculated:
     \begin{align}
- \mathbf{S} &= \mathbf{S}''\tilde{\mathbf{R}} \\
- \mathbf{L} &= \tilde{\mathbf{R}}^\top\mathbf{L}''
+      \mathbf{S} &= \mathbf{S}''\tilde{\mathbf{R}} \\
+      \mathbf{L} &= \tilde{\mathbf{R}}^\top\mathbf{L}''
     \end{align}
- }
+  }
 \end{enumerate}
 
 \subsection{Constructing the Image Matrix}
 After following the previous steps correctly, we obtained the true light matrix $\mathbf{L}$ and the true surface matrix $\mathbf{S}$:
 \begin{align}
- \mathbf{S} &= 
+  \mathbf{S} &= 
   \begin{bmatrix}
- s_{1x} & s_{1y} & s_{1z} \\
- s_{2x} & s_{2y} & s_{2z} \\
+    s_{1x} & s_{1y} & s_{1z} \\
+    s_{2x} & s_{2y} & s_{2z} \\
     \vdots & \vdots & \vdots  \\
- s_{Px} & s_{Py} & s_{Pz}
+    s_{Px} & s_{Py} & s_{Pz}
   \end{bmatrix} \\
- \mathbf{L} &= 
+  \mathbf{L} &= 
   \begin{bmatrix}
- l_{x1} & l_{x2} & \cdots  & l_{xF} \\
- l_{y1} & l_{y2} & \cdots  & l_{yF} \\
- l_{z1} & l_{z2} & \cdots  & l_{zF} \\
+    l_{x1} & l_{x2} & \cdots  & l_{xF} \\
+    l_{y1} & l_{y2} & \cdots  & l_{yF} \\
+    l_{z1} & l_{z2} & \cdots  & l_{zF} \\
   \end{bmatrix}
 \end{align}
 
@@ -327,12 +332,12 @@ With
 
 From which we can calculate the image matrix $\mathbf{I}$:
 \begin{equation}
- \mathbf{I} = \mathbf{SL} = 
+  \mathbf{I} = \mathbf{SL} = 
   \begin{bmatrix}
- i_{11} & i_{12} & \cdots & i_{1F} \\
- i_{21} & i_{22} & \cdots & i_{2F} \\
+    i_{11} & i_{12} & \cdots & i_{1F} \\
+    i_{21} & i_{22} & \cdots & i_{2F} \\
     \vdots & \vdots & \ddots & \vdots \\
- i_{P1} & i_{P2} & \cdots & i_{PF} \\
+    i_{P1} & i_{P2} & \cdots & i_{PF} \\
   \end{bmatrix}
 \end{equation}
 
@@ -386,7 +391,7 @@ We provide a flowchart rather than pseudocode, as we believe a high-level overvi
 
 \section{Results}
 \subsection{Qualitative Results}
-The pipeline output is the guide normal, which can be easily visualized; the results are shown in Figure \ref{fig:results:a}.
+The pipeline output are the surface matrix $\mathbf{S}$ and light matrix $\mathbf{L}$, the first of which can be easily visualized; the results are shown in Figure \ref{fig:results:a}.
 From this result, a height map can be generated using the Frankot-Chellappa algorithm; this result is shown in Figure \ref{fig:results:b}.
 
 \begin{figure}[H]
@@ -408,7 +413,14 @@ From this result, a height map can be generated using the Frankot-Chellappa algo
   \label{fig:results}
 \end{figure}
 
+\newpage
 We also ran other objects from the dataset through the uncalibrated photometric stereo pipeline; the results are shown in Figure \ref{fig:results}.
+The cat (Figure \ref{fig:results:b}), the scholar (Figure \ref{fig:result:normal-map-scholar}), and the frog (Figure \ref{fig:result:normal-map-frog}) show very good results, the 3D shape of the object closely represents the expected true shape.
+However, the result of the rhinoceros is less good, we can see that the resulted shape is wrong.
+Especially when looking at the bottom of the nose, where we see it pointing upwards instead of downwards.
+An explanation for this wrong shape can be that the rhino object has less corners and larger, smoother surfaces.
+Making it more difficult for the algorithm to correctly estimate the depth of the object.
+
 \begin{figure}[H]
   \centering
   \begin{subfigure}[t]{0.32\linewidth}
@@ -419,9 +431,9 @@ We also ran other objects from the dataset through the uncalibrated photometric 
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{IMG/Results/res-01-albedo-lizard.png}
+    \includegraphics[width=\linewidth]{IMG/Results/res-01-albedo-hippo.png}
     \caption{}
-    \label{fig:result:albedo-lizard}
+    \label{fig:result:albedo-rhino}
   \end{subfigure}
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
@@ -437,9 +449,9 @@ We also ran other objects from the dataset through the uncalibrated photometric 
   \end{subfigure}
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{IMG/Results/res-04-guide-normal-lizard.png}
+    \includegraphics[width=\linewidth]{IMG/Results/res-04-guide-normal-hippo.png}
     \caption{}
-    \label{fig:result:guidenormal-lizard}
+    \label{fig:result:guidenormal-rhino}
   \end{subfigure}
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
@@ -455,9 +467,9 @@ We also ran other objects from the dataset through the uncalibrated photometric 
   \end{subfigure}
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{IMG/Results/res-05-normal-map-lizard.png}
+    \includegraphics[width=\linewidth]{IMG/Results/res-05-normal-map-hippo.png}
     \caption{}
-    \label{fig:result:normal-map-lizard}
+    \label{fig:result:normal-map-rhino}
   \end{subfigure}
   \begin{subfigure}[t]{0.32\linewidth}
     \centering
@@ -466,21 +478,21 @@ We also ran other objects from the dataset through the uncalibrated photometric 
     \label{fig:result:normal-map-frog}
   \end{subfigure}
 
-  \caption{Results for \textit{scholar}, \textit{lizard}, and \textit{frog} as inputs to the pipeline, showing (a-c) the albedo estimates, (d-f) the guide-normal estimates, and (g-i) the normal maps.}
+  \caption{Results for \textit{scholar}, \textit{rhino}, and \textit{frog} as inputs to the pipeline, showing (a-c) the albedo estimates, (d-f) the guide-normal estimates, and (g-i) the normal maps.}
   \label{fig:results}
 \end{figure}
 
 \subsection{Quantitative Results}
 Visually inspecting our results is not enough to properly test our model.
 Therefore, we calculated an error measure that gives us more insight into how well our pipeline predicts the surface normal.
-Our error measure quantifies the discrepancy between the true surface map $\mathbf{T}$ and the surface map $\mathbf{S}$ estimated by using their $\ell_2$ distance.
+Our error measure quantifies the difference between the true surface map $\mathbf{T}$ and the estimated surface map $\mathbf{S}$ by calculating their distance by using the $\ell_2$-norm.
 Lower values indicate a closer match to the ground truth (Equation \ref{eq:ell2-error}).
 
 We used this error to test different objects from the dataset; the results are shown in Table \ref{tab:ell2-error}.
 There, we can observe that the errors of the frog and hippo are much higher than those of the cat, lizard, and pig.
 These results reflect the same conclusion as when looking at the 3D representation of the objects.
 
-Figure \ref{fig:ell2-error} is a visualized version of the identical scores, where we can draw the same conclusion.
+Figure \ref{fig:ell2-error} is a visualized version of the error scores, where we can draw the same conclusion.
 The pipeline has much more difficulty predicting the correct shape of the hippo than it does for the other objects.
 We can also see that the model has more difficulty predicting flat surfaces; we assume this is because flat surfaces lack shadows that the pipeline is based on.
 The shadow-rich areas exhibit lower errors, further supporting our assumption.
@@ -523,6 +535,16 @@ With
 \end{figure}
 
 \section{Discussion}
+\subsection{Guide Normal Constraint}
+A crucial step in calculating the true surface and light matrices is applying the guide normal constraint explained in Section \ref{sec:guidenormalconstraint}.
+One would thus expect the original authors to explain this constraint in great detail.
+However, they state the following: "\textit{The algorithm to calculate guide normal used in this paper is quite different from other existing methods, however, we skip to explain it since it is a combination of existing techniques developed in the field of image processing}".
+
+Therefore, we implemented this step using other sources.
+Unfortunately, since the computation is essentially a straightforward combination of standard image processing operations, few papers or books provide a complete, end-to-end algorithm for constructing the guide normal.
+We therefore combined modern tools like generative AI with additional references to obtain a practical, well-functioning guide-normal procedure.
+This resulted in a well-commented working function described in Algorithm \ref{alg:guide-normal}.
+
 \subsection{Threshold $T_a$}
 The authors of the original paper talk about using a threshold $T_a$ when calculating the shading image.
 Unfortunately, they do not explain how they arrived at this threshold.
@@ -537,17 +559,6 @@ The plot we used is shown in Figure \ref{fig:threshold}.
   \label{fig:threshold}
 \end{figure}
 
-\newpage
-\subsection{Guide Normal Constraint}
-A crucial step in calculating the true surface and light matrices is applying the guide normal constraint explained in Section \ref{sec:guidenormalconstraint}.
-One would thus expect the original authors to explain this constraint in great detail.
-However, they state the following: "\textit{The algorithm to calculate guide normal used in this paper is quite different from other existing methods, however, we skip to explain it since it is a combination of existing techniques developed in the field of image processing}".
-
-Therefore, we implemented this step using other sources.
-Unfortunately, since the computation is essentially a straightforward combination of standard image processing operations, few papers or books provide a complete, end-to-end algorithm for constructing the guide normal.
-We therefore combined modern tools like generative AI with additional references to obtain a practical, well-functioning guide-normal procedure.
-This resulted in a well-commented working function described in Algorithm \ref{alg:guide-normal}.
-
 \subsection{General}
 The reproduced pipeline from the original paper generally works well.
 When looking at the error values in Table \ref{tab:ell2-error}, we see that most objects are predicted with low error scores.
@@ -555,15 +566,18 @@ These results are further strengthened by examining the 3D and error plots.
 
 \section{Reproducibility Checklist}
 \begin{itemize}
-  \item[\cbox] Code provided \& documented
+  \item[\cboxchecked] Code provided \& documented
   \item[\cboxchecked] Data included
   \item[\cboxchecked] Environment included
   \item[\cboxchecked] Run instruction included
   \item[\cboxchecked] Random seeds
   \item[\cbox] Expected outputs
-  \item[\cbox] Algorithm pseudo code included
+  \item[\cboxchecked] Algorithm pseudo code included
 \end{itemize}
 
+\bibliography{sources}
+
+\newpage
 \appendix
 \section{Guide Normal Calculations}
 \begin{itemize}
@@ -607,7 +621,6 @@ These results are further strengthened by examining the 3D and error plots.
   \label{tab:ell2-error}
 \end{table}
 
-\newpage
 \section{Pseudo Code for Guide Normal Constraint}
 \begin{algorithm}[H]
   \caption{Compute guide normal from albedo estimate}
@@ -638,8 +651,6 @@ These results are further strengthened by examining the 3D and error plots.
     \State \Return $\mathbf{N}_g$ \Comment{optionally also return $\mathbf{H}$ and $\mathbf{Z}$}
   \end{algorithmic}
 \end{algorithm}
-
-\bibliography{sources}
 
 \newpage
 \section{Schematic Overview}

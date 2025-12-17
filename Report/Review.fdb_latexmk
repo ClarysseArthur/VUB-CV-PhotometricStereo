@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex Review"] 1765969393.04251 "Review.aux" "Review.bbl" "Review" 1765969447.02922 0
+["bibtex Review"] 1765980875.59866 "Review.aux" "Review.bbl" "Review" 1765993638.58056 0
   "./sources.bib" 1765020344.58167 2308 893bffbdfaa8cfbdd22931b415a07c9f ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1735764768 90749 48abc1cbed6fafc6fc31528e3aa606ca ""
-  "Review.aux" 1765969446.70533 10648 2e44853a88e9ae0aa7593be93335f6c4 "pdflatex"
+  "Review.aux" 1765993638.25094 10640 9435223591d090c0afa4866e8806f544 "pdflatex"
   (generated)
   "Review.bbl"
   "Review.blg"
   (rewritten before read)
-["pdflatex"] 1765969444.63672 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765969447.02937 0
-  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765969444.53312 26450 89f308959cd159b96892d62e4d9bd327 ""
+["pdflatex"] 1765993636.12322 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" "Review.pdf" "Review" 1765993638.58093 0
+  "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Review.tex" 1765993636.01426 27504 71f9fa9332191291838a12d6ec6d594d ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_7grukw.enc" 1490131464 2934 a4a9158faed2e9e89c771b4e3b7fc12f ""
@@ -244,19 +244,19 @@
   "IMG/Pipeline/pip-05-normal-map.png" 1765960564.16528 130949 ed2d39f1c2777f9d6a31fd82029a5954 ""
   "IMG/Pipeline/pip-06-depth-map.png" 1765795165.34709 33573 cbda45ac8da28582f437c6702a496174 ""
   "IMG/Results/res-01-albedo-frog.png" 1765877285.4844 53226 7c57d995edd38674e9ad65e8b3145f37 ""
-  "IMG/Results/res-01-albedo-lizard.png" 1765877383.11317 55901 bf3640836c26890c433da4a61d97aedc ""
+  "IMG/Results/res-01-albedo-hippo.png" 1765979868.09042 57007 89a95d74f69b23917336fc29f5e5458d ""
   "IMG/Results/res-01-albedo-scholar.png" 1765877350.19152 72113 4ff12bf37080198fafc38c52a23eb90c ""
   "IMG/Results/res-04-guide-normal-frog.png" 1765960542.32742 58134 396c15591caa6fb9f006c03545a3d2b1 ""
-  "IMG/Results/res-04-guide-normal-lizard.png" 1765960546.57124 51814 1c37021c73503577a7dd7f2509e7839f ""
+  "IMG/Results/res-04-guide-normal-hippo.png" 1765979868.45006 54415 03e8fd7c58495855880d9204872fa3b5 ""
   "IMG/Results/res-04-guide-normal-scholar.png" 1765960554.51129 44992 114410b10f1adf4fba19b8b865f939c6 ""
   "IMG/Results/res-05-normal-map-frog.png" 1765959931.58128 144164 ea0960a22d7e1a4799a121d9ac502de1 ""
-  "IMG/Results/res-05-normal-map-lizard.png" 1765959982.64652 119706 47f2e32bc036a0a4ca427a6e30743da5 ""
+  "IMG/Results/res-05-normal-map-hippo.png" 1765979868.64934 160000 269319902861a0dbbf3990b438f4fd6d ""
   "IMG/Results/res-05-normal-map-scholar.png" 1765959910.6309 186348 1c2847b59da8d51ea62119909c33864e ""
   "IMG/Results/res-3d.png" 1765795867.65956 177325 e9e18063e56b44e62f631a821cf72366 ""
-  "Review.aux" 1765969446.70533 10648 2e44853a88e9ae0aa7593be93335f6c4 "pdflatex"
-  "Review.bbl" 1765969393.13103 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
-  "Review.out" 1765969446.70642 3498 6e4e0b147d88f03270088ce96c5d9bce "pdflatex"
-  "Review.tex" 1765969444.53312 26450 89f308959cd159b96892d62e4d9bd327 ""
+  "Review.aux" 1765993638.25094 10640 9435223591d090c0afa4866e8806f544 "pdflatex"
+  "Review.bbl" 1765980875.68807 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Review"
+  "Review.out" 1765993638.25219 3498 4f9176b0ec66af2ed1991beb83b1a072 "pdflatex"
+  "Review.tex" 1765993636.01426 27504 71f9fa9332191291838a12d6ec6d594d ""
   (generated)
   "Review.aux"
   "Review.log"
