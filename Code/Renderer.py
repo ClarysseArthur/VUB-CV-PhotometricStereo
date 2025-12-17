@@ -17,8 +17,8 @@ def frankot_chellappa(surface_normals):
     dx, dy, dz = surface_normals[:, :, 0], surface_normals[:, :, 1], surface_normals[:, :, 2]
 
     # 2. compute p = -dx/dz and q = -dy/dz
-    p = np.divide(dx, dz, where=(dz != 0)) # avoid division by zero
-    q = np.divide(dy, dz, where=(dz != 0)) # avoid division by zero
+    p = np.divide(-dx, dz, where=(dz != 0)) # avoid division by zero
+    q = np.divide(-dy, dz, where=(dz != 0)) # avoid division by zero
 
     # 3. mask out background (where normals are zero)
     mask = (dz != 0).astype(float)
