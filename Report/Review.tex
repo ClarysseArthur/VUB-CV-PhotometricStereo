@@ -471,7 +471,56 @@ We also ran other objects from the dataset through the uncalibrated photometric 
 \end{figure}
 
 \subsection{Quantitative Results}
-\dots
+Visually inspecting our results is not enough to properly test our model.
+Therefore, we calculated an error measure that gives us more insight into how well our pipeline predicts the surface normal.
+Our error measure quantifies the discrepancy between the true surface map $\mathbf{T}$ and the surface map $\mathbf{S}$ estimated by using their $\ell_2$ distance.
+Lower values indicate a closer match to the ground truth (Equation \ref{eq:ell2-error}).
+
+We used this error to test different objects from the dataset; the results are shown in Table \ref{tab:ell2-error}.
+There, we can observe that the errors of the frog and hippo are much higher than those of the cat, lizard, and pig.
+These results reflect the same conclusion as when looking at the 3D representation of the objects.
+
+Figure \ref{fig:ell2-error} is a visualized version of the identical scores, where we can draw the same conclusion.
+The pipeline has much more difficulty predicting the correct shape of the hippo than it does for the other objects.
+We can also see that the model has more difficulty predicting flat surfaces; we assume this is because flat surfaces lack shadows that the pipeline is based on.
+The shadow-rich areas exhibit lower errors, further supporting our assumption.
+
+\begin{equation}
+ \mathbf{D} = \left\lVert \mathbf{S} - \mathbf{T} \right\rVert_2
+  \label{eq:ell2-error}
+\end{equation}
+
+With
+\begin{itemize}
+  \item $\mathbf{S}$: The estimated surface map
+  \item $\mathbf{T}$: The true surface map
+  \item $\mathbf{D}$: The distance between the true surface map and the estimated surface map 
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/Error/error-hippo.png}
+    \caption{}
+    \label{fig:errors:scholar}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/Error/error-lizard.png}
+    \caption{}
+    \label{fig:errors:lizard}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{IMG/Error/error-cat.png}
+    \caption{}
+    \label{fig:errors:cat}
+  \end{subfigure}\hfill
+
+  \caption{Magnitude of the error of the normal map visualized for (a) scholar, (b) lizard, and (c) cat}
+  \label{fig:ell2-error}
+\end{figure}
 
 \section{Discussion}
 \subsection{Threshold $T_a$}
@@ -488,6 +537,7 @@ The plot we used is shown in Figure \ref{fig:threshold}.
   \label{fig:threshold}
 \end{figure}
 
+\newpage
 \subsection{Guide Normal Constraint}
 A crucial step in calculating the true surface and light matrices is applying the guide normal constraint explained in Section \ref{sec:guidenormalconstraint}.
 One would thus expect the original authors to explain this constraint in great detail.
@@ -499,7 +549,9 @@ We therefore combined modern tools like generative AI with additional references
 This resulted in a well-commented working function described in Algorithm \ref{alg:guide-normal}.
 
 \subsection{General}
-\dots
+The reproduced pipeline from the original paper generally works well.
+When looking at the error values in Table \ref{tab:ell2-error}, we see that most objects are predicted with low error scores.
+These results are further strengthened by examining the 3D and error plots.
 
 \section{Reproducibility Checklist}
 \begin{itemize}
@@ -539,8 +591,25 @@ This resulted in a well-commented working function described in Algorithm \ref{a
   }
 \end{itemize}
 
+\section{Error Values}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{lccccc}
+    \toprule
+                        & Cat  & Frog & Hippo& Lizard& Pig \\
+    \midrule
+    \textbf{Mean Error} & 0.4  & 0.8  & 0.84 & 0.29  & 0.38 \\
+    \textbf{Max Error}  & 2.15 & 2.03 & 1.83 & 1.66  & 1.87 \\
+    \bottomrule
+  \end{tabular}
+
+  \caption{Placeholder results for two animals.}
+  \label{tab:ell2-error}
+\end{table}
+
+\newpage
 \section{Pseudo Code for Guide Normal Constraint}
-\begin{algorithm}
+\begin{algorithm}[H]
   \caption{Compute guide normal from albedo estimate}
   \label{alg:guide-normal}
   \begin{algorithmic}[1]
@@ -573,11 +642,10 @@ This resulted in a well-commented working function described in Algorithm \ref{a
 \bibliography{sources}
 
 \newpage
-\section{A Schematic Overview}
-
-\begin{figure}[p]
+\section{Schematic Overview}
+\begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{IMG/Extra/Flowchart.png}
+  \includegraphics[width=0.75\textwidth,keepaspectratio]{IMG/Extra/Flowchart.png}
   \caption{A schematic overview of the pipeline}
   \label{fig:schem}
 \end{figure}
