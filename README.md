@@ -22,3 +22,11 @@ After installing the dependencies from [requirements.txt](./requirements.txt), y
 - The code is tested on:
     - Windows 11 (±2 seconds to run, including Plotly 3D visualization)
     - Mac OS 26 Tahoe (±2 seconds to run, including Plotly 3D visualization)
+
+## Results
+- The expected results for the cat dataset are the following:
+    - Mean error: 0.4
+    - Max error: 2.15
+    - Min error: 0.0
+
+    ![Expected Results](./Report/IMG/Error/error-cat.png)
