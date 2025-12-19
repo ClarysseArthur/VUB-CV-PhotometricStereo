@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex Report"] 1766148880.79814 "Report.aux" "Report.bbl" "Report" 1766149303.72822 0
+["bibtex Report"] 1766148880.79814 "Report.aux" "Report.bbl" "Report" 1766156263.15849 0
   "./sources.bib" 1765020344.58167 2308 893bffbdfaa8cfbdd22931b415a07c9f ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/acmart/ACM-Reference-Format.bst" 1735764768 90749 48abc1cbed6fafc6fc31528e3aa606ca ""
-  "Report.aux" 1766149303.3998 11305 257c117eef2eea049ac24eacaff3821e "pdflatex"
+  "Report.aux" 1766156262.83024 11305 257c117eef2eea049ac24eacaff3821e "pdflatex"
   (generated)
   "Report.bbl"
   "Report.blg"
   (rewritten before read)
-["pdflatex"] 1766149301.37133 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Report.tex" "Report.pdf" "Report" 1766149303.72839 0
+["pdflatex"] 1766156260.72557 "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Report.tex" "Report.pdf" "Report" 1766156263.15863 0
   "/Users/arthurclarysse/Desktop/🎓/05 Computer Vision/VUB-CV-GroupProject/Report/Report.tex" 1766149301.2639 29216 621b54166e3498327bcf9b1f03aa9064 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/libertine/lbtn_76gpa5.enc" 1490131464 2933 9ad527ce78d7c5fa0a642dead095f172 ""
@@ -234,7 +234,7 @@
   "IMG/Error/error-cat.png" 1765966587.34163 83690 c330d3a3899b70247ea8a72a9116ca7a ""
   "IMG/Error/error-hippo.png" 1765968459.43543 99826 dc9d01d1ea84b85f9910e345e247224a ""
   "IMG/Error/error-lizard.png" 1765966401.17072 73003 328880c61f2f7455fef8ad16a2dbf312 ""
-  "IMG/Extra/Flowchart.png" 1766148570.4868 359846 508a73ab07ff217459598418a28a7f7f ""
+  "IMG/Extra/Flowchart.png" 1766156254.74758 362828 7db430b0ae6b5e73ba0e61fd5e121932 ""
   "IMG/Extra/Overview.png" 1765036272.56302 330560 26147a371cd7985454a40a5ded2ddc97 ""
   "IMG/Extra/Treshold.png" 1765872553.59907 44756 505e93e4bec87682ba993111b0a170d3 ""
   "IMG/Pipeline/pip-01-albedo.png" 1765795164.66453 50768 91e967dfb35c4840fc9bbf803db6aaab ""
@@ -253,9 +253,9 @@
   "IMG/Results/res-05-normal-map-hippo.png" 1765979868.64934 160000 269319902861a0dbbf3990b438f4fd6d ""
   "IMG/Results/res-05-normal-map-scholar.png" 1765959910.6309 186348 1c2847b59da8d51ea62119909c33864e ""
   "IMG/Results/res-3d.png" 1765795867.65956 177325 e9e18063e56b44e62f631a821cf72366 ""
-  "Report.aux" 1766149303.3998 11305 257c117eef2eea049ac24eacaff3821e "pdflatex"
+  "Report.aux" 1766156262.83024 11305 257c117eef2eea049ac24eacaff3821e "pdflatex"
   "Report.bbl" 1766148880.88514 2917 f412f1696b970023cc79c7952c56e0d0 "bibtex Report"
-  "Report.out" 1766149303.4012 3498 4f9176b0ec66af2ed1991beb83b1a072 "pdflatex"
+  "Report.out" 1766156262.83126 3498 4f9176b0ec66af2ed1991beb83b1a072 "pdflatex"
   "Report.tex" 1766149301.2639 29216 621b54166e3498327bcf9b1f03aa9064 ""
   (generated)
   "Report.aux"
