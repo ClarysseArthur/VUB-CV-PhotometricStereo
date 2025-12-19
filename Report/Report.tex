@@ -309,7 +309,6 @@ We can formulate the true surface and light matrices in terms of $\mathbf{R}$ an
 After following the previous steps correctly, we obtained the true light matrix $\mathbf{L}$ and the true surface matrix $\hat{\mathbf{S}}$.
 However, while $\mathbf{L}$ contains all light direction for all pixels $P$, $\hat{\mathbf{S}}$ only contains the non-background pixels $\hat{P}$.
 We will reconstruct the complete true surface matrix $\mathbf{S}$ for all pixels $P$ using equation \ref{eq:imagematrix}.
-
 \begin{align}
   \hat{\mathbf{S}} &= 
   \begin{bmatrix}
@@ -332,7 +331,7 @@ With
   \item $\hat{P}$: The number of foreground pixels
   \item $F$: The number of images
 \end{itemize}
-
+\medskip
 Using the image matrix $\mathbf{I}$:
 \begin{equation}
   \mathbf{I} = \mathbf{SL} = 
@@ -344,7 +343,6 @@ Using the image matrix $\mathbf{I}$:
   \end{bmatrix}
   \label{eq:imagematrix}
 \end{equation}
-
 We can calculate $\mathbf{S}$ as follows:
 \begin{equation}
   \mathbf{S} = \mathbf{I} \, \mathbf{L}^{+}
@@ -361,6 +359,7 @@ With $\mathbf{L}^{+}$ The pseudo-inverse of $\mathbf{L}$ and
   \end{bmatrix} \\
 \end{equation}
 
+\medskip
 The resulting surface matrix $\mathbf{S}$ is shown in Figure \ref{fig:implementation:normalmap}.
 A complete schematic overview is presented in Figure \ref{fig:schem}.
 We provide a flowchart rather than pseudocode, as we believe a high-level overview with equations is more useful here than restating the steps above in algorithmic form.
@@ -429,7 +428,7 @@ From this result, a height map can be generated using the Frankot-Chellappa algo
     \label{fig:results:b}
   \end{subfigure}\hfill
 
-  \caption{The result of the pipeline, showing (a) the estimated normal map and (b) a 3D reconstruction obtained from the estimated normal map using the Frankot-Chellappa algorithm.}
+  \caption{The result of the pipeline, showing (a) the estimated normal map and (b) a 3D reconstruction obtained from the estimated normal map using the Frankot-Chellappa algorithm. With a sphere shown in (a) as a legend, indicating how the colours map to surface directions.}
   \label{fig:results}
 \end{figure}
 
@@ -498,7 +497,7 @@ Making it more difficult for the algorithm to correctly estimate the depth of th
     \label{fig:result:normal-map-frog}
   \end{subfigure}
 
-  \caption{Results for \textit{scholar}, \textit{rhino}, and \textit{frog} as inputs to the pipeline, showing (a-c) the albedo estimates, (d-f) the guide-normal estimates, and (g-i) the normal maps.}
+  \caption{Results for \textit{scholar}, \textit{rhino}, and \textit{frog} as inputs to the pipeline, showing (a-c) the albedo estimates, (d-f) the guide-normal estimates, and (g-i) the normal maps. With a sphere shown in (d-i) as a legend, indicating how the colours map to surface directions.}
   \label{fig:results}
 \end{figure}
 
@@ -596,7 +595,7 @@ These results are further strengthened by examining the 3D and error plots.
   \item[\cboxchecked] Data included
   \item[\cboxchecked] Environment included
   \item[\cboxchecked] Run instruction included
-  \item[\cboxchecked] Random seeds
+  \item[\cboxchecked] Random seeds (No seeds were used)
   \item[\cboxchecked] Expected outputs
   \item[\cboxchecked] Algorithm pseudo code included
 \end{itemize}
