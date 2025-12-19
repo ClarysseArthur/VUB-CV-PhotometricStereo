@@ -307,7 +307,7 @@ We can formulate the true surface and light matrices in terms of $\mathbf{R}$ an
 
 \subsection{Constructing the Image Matrix}
 After following the previous steps correctly, we obtained the true light matrix $\mathbf{L}$ and the true surface matrix $\hat{\mathbf{S}}$.
-However, while $\mathbf{L}$ contains all pixels $P$, $\hat{\mathbf{S}}$ only contains the non-background pixels $\hat{P}$.
+However, while $\mathbf{L}$ contains all light direction for all pixels $P$, $\hat{\mathbf{S}}$ only contains the non-background pixels $\hat{P}$.
 We will reconstruct the complete true surface matrix $\mathbf{S}$ for all pixels $P$ using equation \ref{eq:imagematrix}.
 
 \begin{align}
