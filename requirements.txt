@@ -4,3 +4,4 @@ physics_tenpy==1.1.0
 ipykernel==7.1.0
 matplotlib==3.10.7
 plotly==5.24.1
+scipy==1.16.3
