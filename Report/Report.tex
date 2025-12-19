@@ -49,7 +49,7 @@
   \city{Brussels}
   \country{Belgium}
 }
-\authornote{Student number: \dots}
+\authornote{Student number: 0617692}
 
 \author{Guillaume Tibergyn}
 \email{guillaume.tibergyn@vub.be}
@@ -132,7 +132,6 @@ From which we define the pseudo surface and pseudo light matrices as
 
 \newpage
 However, two ambiguities remain.
-
 First, we have that the SVD factorization $\mathbf{\hat{I}} = \mathbf{SL}$ is not unique.
 For any invertible $3 \times 3$ matrix $\mathbf{A}$, $\mathbf{SA}$ and $\mathbf{A}^{-1}\mathbf{L}$ produce the same image matrix, so $\mathbf{S}$ and $\mathbf{L}$ are only defined up to an arbitrary linear transformation.
 This ambiguity can be resolved by using the constant albedo constraint.
@@ -293,8 +292,8 @@ We can formulate the true surface and light matrices in terms of $\mathbf{R}$ an
   \item {
     We can orthogonalize the matrix $\mathbf{R}$ into $\tilde{\mathbf{R}}$ as follows:
     \begin{align}
-      \mathbf{R} &= \mathbf{U}_R \mathbf{W}_R \mathbf{V}^\top_R \\
-      \tilde{\mathbf{R} } &= \mathbf{U}_R \mathbf{V}^\top_R
+      \mathbf{R} &= \mathbf{Q}_R\,\mathbf{R}_R \\
+      \tilde{\mathbf{R}} &= \mathbf{Q}_R
     \end{align}
  }
   \item {
@@ -307,14 +306,17 @@ We can formulate the true surface and light matrices in terms of $\mathbf{R}$ an
 \end{enumerate}
 
 \subsection{Constructing the Image Matrix}
-After following the previous steps correctly, we obtained the true light matrix $\mathbf{L}$ and the true surface matrix $\mathbf{S}$:
+After following the previous steps correctly, we obtained the true light matrix $\mathbf{L}$ and the true surface matrix $\hat{\mathbf{S}}$.
+However, while $\mathbf{L}$ contains all pixels $P$, $\hat{\mathbf{S}}$ only contains the non-background pixels $\hat{P}$.
+We will reconstruct the complete true surface matrix $\mathbf{S}$ for all pixels $P$ using equation \ref{eq:imagematrix}.
+
 \begin{align}
-  \mathbf{S} &= 
+  \hat{\mathbf{S}} &= 
   \begin{bmatrix}
     s_{1x} & s_{1y} & s_{1z} \\
     s_{2x} & s_{2y} & s_{2z} \\
     \vdots & \vdots & \vdots  \\
-    s_{Px} & s_{Py} & s_{Pz}
+    s_{\hat{P}x} & s_{\hat{P}y} & s_{\hat{P}z}
   \end{bmatrix} \\
   \mathbf{L} &= 
   \begin{bmatrix}
@@ -326,11 +328,12 @@ After following the previous steps correctly, we obtained the true light matrix 
 
 With
 \begin{itemize}
-  \item $P$: The number of pixels, calculated by recalculating the surface matrix from the light matrix
+  \item $P$: The number of pixels
+  \item $\hat{P}$: The number of foreground pixels
   \item $F$: The number of images
 \end{itemize}
 
-From which we can calculate the image matrix $\mathbf{I}$:
+Using the image matrix $\mathbf{I}$:
 \begin{equation}
   \mathbf{I} = \mathbf{SL} = 
   \begin{bmatrix}
@@ -339,11 +342,28 @@ From which we can calculate the image matrix $\mathbf{I}$:
     \vdots & \vdots & \ddots & \vdots \\
     i_{P1} & i_{P2} & \cdots & i_{PF} \\
   \end{bmatrix}
+  \label{eq:imagematrix}
 \end{equation}
 
-The surface matrix obtained by running the pipeline is shown in Figure \ref{fig:implementation:normalmap}.
+We can calculate $\mathbf{S}$ as follows:
+\begin{equation}
+  \mathbf{S} = \mathbf{I} \, \mathbf{L}^{+}
+\end{equation}
+
+With $\mathbf{L}^{+}$ The pseudo-inverse of $\mathbf{L}$ and
+\begin{equation}
+  \mathbf{S} =
+  \begin{bmatrix}
+    s_{1x} & s_{1y} & s_{1z} \\
+    s_{2x} & s_{2y} & s_{2z} \\
+    \vdots & \vdots & \vdots  \\
+    s_{Px} & s_{Py} & s_{Pz}
+  \end{bmatrix} \\
+\end{equation}
+
+The resulting surface matrix $\mathbf{S}$ is shown in Figure \ref{fig:implementation:normalmap}.
 A complete schematic overview is presented in Figure \ref{fig:schem}.
-We provide a flowchart rather than pseudocode, as we believe a high-level overview is more useful here than restating the steps above in algorithmic form.
+We provide a flowchart rather than pseudocode, as we believe a high-level overview with equations is more useful here than restating the steps above in algorithmic form.
 
 \newpage
 \begin{figure}[H]
@@ -385,7 +405,7 @@ We provide a flowchart rather than pseudocode, as we believe a high-level overvi
     \label{fig:implementation:normalmap}
   \end{subfigure}
 
-  \caption{Intermediate results of our uncalibrated photometric stereo pipeline: (a) estimated albedo, (b) estimated silhouette, (c) estimated approximate shape, (d) estimated guide normal, (e) estimated depth map, and (f) estimated normal map.}
+  \caption{Intermediate results of our uncalibrated photometric stereo pipeline: (a) estimated albedo, (b) estimated silhouette, (c) estimated approximate shape, (d) estimated guide normal, (e) estimated depth map, and (f) estimated normal map. With a sphere shown in (d) and (f) as a legend, indicating how the colours map to surface directions.}
   \label{fig:implementation}
 \end{figure}
 
@@ -485,8 +505,11 @@ Making it more difficult for the algorithm to correctly estimate the depth of th
 \subsection{Quantitative Results}
 Visually inspecting our results is not enough to properly test our model.
 Therefore, we calculated an error measure that gives us more insight into how well our pipeline predicts the surface normal.
-Our error measure quantifies the difference between the true surface map $\mathbf{T}$ and the estimated surface map $\mathbf{S}$ by calculating their distance by using the $\ell_2$-norm.
-Lower values indicate a closer match to the ground truth (Equation \ref{eq:ell2-error}).
+Our error measure quantifies the difference between the true surface map $\mathbf{T}$ and the estimated surface map $\mathbf{S}$ as the $\ell_2$-norm distance.
+Note that the true surface map we use is the result of the calibrated estimation of the surface map.
+The dataset creators computed their scores by re-rendering the estimated normal map into a shading image and comparing it with the captured image.
+Unfortunately, we cannot replicate this evaluation method because the calibrated lighting parameters needed to render the shading images under the original illumination are not available; therefore, we instead compare our estimated surface map to the calibrated photometric-stereo result used as ground truth.
+Lower values indicate a closer match (Equation \ref{eq:ell2-error}).
 
 We used this error to test different objects from the dataset; the results are shown in Table \ref{tab:ell2-error}.
 There, we can observe that the errors of the frog and hippo are much higher than those of the cat, lizard, and pig.
@@ -545,6 +568,9 @@ Unfortunately, since the computation is essentially a straightforward combinatio
 We therefore combined modern tools like generative AI with additional references to obtain a practical, well-functioning guide-normal procedure.
 This resulted in a well-commented working function described in Algorithm \ref{alg:guide-normal}.
 
+A slight difference we observed compared to the paper is that the resulting guide normals are less smooth than the original ones.
+Our results still showed excellent results, so we did not see this as an issue.
+
 \subsection{Threshold $T_a$}
 The authors of the original paper talk about using a threshold $T_a$ when calculating the shading image.
 Unfortunately, they do not explain how they arrived at this threshold.
@@ -571,13 +597,13 @@ These results are further strengthened by examining the 3D and error plots.
   \item[\cboxchecked] Environment included
   \item[\cboxchecked] Run instruction included
   \item[\cboxchecked] Random seeds
-  \item[\cbox] Expected outputs
+  \item[\cboxchecked] Expected outputs
   \item[\cboxchecked] Algorithm pseudo code included
 \end{itemize}
 
+\newpage
 \bibliography{sources}
 
-\newpage
 \appendix
 \section{Guide Normal Calculations}
 \begin{itemize}
@@ -629,22 +655,22 @@ These results are further strengthened by examining the 3D and error plots.
     \Require Albedo estimate $\hat{\rho}$, threshold $T_a$
     \Ensure Guide normal map $\mathbf{N}_g$ (and optional intermediate outputs)
 
-    \State \textbf{1. Silhouette from albedo}
+    \State \textbf{Silhouette from albedo}
     \State $\mathbf{H} \gets \mathbb{1}[\hat{\rho} > T_a]$ \Comment{binary mask of the object}
     
     \state \text{}
-    \State \textbf{2. Approximate shape from silhouette}
+    \State \textbf{Approximate shape from silhouette}
     \State $\mathbf{Z} \gets \textsc{DistanceTransform}(\mathbf{H})$ \Comment{height-like map (higher near center)}
     \State $\mathbf{Z} \gets \textsc{Normalize}(\mathbf{Z})$ \Comment{scale to a bounded range}
 
     \state \text{}
-    \State \textbf{3. Convert shape to normals}
+    \State \textbf{Convert shape to normals}
     \State $(\partial_y \mathbf{Z},\, \partial_x \mathbf{Z}) \gets \textsc{Gradient}(\mathbf{Z})$
     \State $\mathbf{N}_g \gets \textsc{Stack}(-\partial_x \mathbf{Z},\, -\partial_y \mathbf{Z},\, \mathbf{1})$
     \State $\mathbf{N}_g \gets \textsc{UnitNormalize}(\mathbf{N}_g)$
 
     \state \text{}
-    \State \textbf{4. Mask background}
+    \State \textbf{Mask background}
     \State $\mathbf{N}_g[p] \gets \mathbf{0}$ for all pixels $p$ with $\hat{\rho}[p] \le T_a$
 
     \state \text{}
@@ -653,6 +679,8 @@ These results are further strengthened by examining the 3D and error plots.
 \end{algorithm}
 
 \newpage
+\onecolumn
+\centering
 \section{Schematic Overview}
 \begin{figure}[h]
   \centering

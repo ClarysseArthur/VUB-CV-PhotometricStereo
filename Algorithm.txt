@@ -1,0 +1,80 @@
+Uncalibrated Photometric Stereo
+
+INPUTS
+  - Image folder with F images (fixed camera, varying light)
+
+OUTPUTS
+  - Surface Matrix S
+  - Light matrix L
+
+ALGORITHM
+  1. LOAD IMAGES
+  images <- each image in folder
+  images <- STACK(images)
+
+  P <- H * W
+  I <- zeros(F, P)
+
+  for f in 0..F-1:
+      I[f, :] <- FLATTEN(images[f])        # make image matrix
+
+  2. ESTIMATE ALBEDO 
+  avg <- MEAN(images over f)
+  a_hat <- BILATERAL_FILTER(avg)
+  mask2D <- (a_hat > T_a)
+  mask1D <- FLATTEN(mask2D)
+  P_tilde <- COUNT_TRUE(mask2D)
+
+  3. BUILD SHADING / IMAGE MATRIX
+  shading <- full((F, P_tilde), NaN)
+  for f in 0..F-1:
+      shading[f, :] <- I[f, mask1D] / a_hat[mask2D]
+  I_tilde <- TRANSPOSE(shading)            # (P_tilde, F)
+
+  4. SVD 
+  (U, s, Vt) <- SVD(I_tilde, full_matrices=False)
+  U'  <- U[:, 0:3]
+  W'  <- diag(s[0:3])
+  Vt' <- Vt[0:3, :]
+  S' <- U'                                 # pseudo surface matrix
+  L' <- W' @ Vt'                           # pseudo light matrix
+
+  5. CONSTANT-ALBEDO CONSTRAINT -> AMBIGUITY 1
+  C <- zeros(P_tilde, 6)
+  for each valid pixel index p:
+      sx, sy, sz <- S'[p, :]
+      C[p, :] <- [ sx^2, sy^2, sz^2, 2*sx*sy, 2*sy*sz, 2*sz*sx ]
+  b <- PINV(C) @ ONES(P_tilde)
+
+  B <- [[b1, b4, b6],
+          [b4, b2, b5],
+          [b6, b5, b3]]
+
+  (U_B, s_B, _) <- SVD(B)
+  W_B <- diag(s_B)
+  A <- U_B @ SQRT(W_B)
+
+  S'' <- S' @ A
+  L'' <- INV(A) @ L'
+
+  6. GUIDE NORMAL CONSTRAINT -> AMBIGUITY 2
+  # guide normal from silhouette + distance transform
+  silhouette <- (avg > T_a)
+  H_tilde <- DISTANCE_TRANSFORM(silhouette)
+  H_tilde <- NORMALIZE(H_tilde)
+
+  dz_dx, dz_dy <- GRADIENTS(H_tilde)
+  G <- STACK( -dz_dx, -dz_dy, ONES )        # (H, W, 3)
+  G <- NORMALIZE_VECTORS(G)
+  G[silhouette == 0] <- 0
+
+  S_tilde <- FLATTEN(G)[mask1D, :]          # (P_tilde, 3)
+
+  R <- PINV(S'') @ S_tilde
+  (R_tilde, _) <- QR(R)                     # orthogonalize (notebook approach)
+
+  S_partial <- S'' @ R_tilde
+  L <- INV(R_tilde) @ L''
+
+  7. RECOVER FULL SURFACE MATRIX FOR ALL PIXELS
+  S_full <- TRANSPOSE(I) @ PINV(L)          # (P, 3)
