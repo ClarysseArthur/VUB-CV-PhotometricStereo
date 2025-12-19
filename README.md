@@ -13,7 +13,8 @@
 > guillaume.tibergyn@vub.be
 
 ## Original paper
-> Hashimoto, Shuhei, Daisuke Miyazaki, and Shinsaku Hiura. 2019. “Uncalibrated Photometric Stereo Constrained by Intrinsic Reflectance Image and Shape from Silhoutte.” 2019 16th International Conference on Machine Vision Applications (MVA), May, 1–6. https://doi.org/10.23919/MVA.2019.8758025.
+> Hashimoto, Shuhei, Daisuke Miyazaki, and Shinsaku Hiura. 2019. “Uncalibrated Photometric Stereo Constrained by Intrinsic Reflectance Image and Shape from Silhoutte.” 2019 16th International Conference on Machine Vision Applications (MVA), May, 1–6. https://doi.org/10.23919/MVA.2019.8758025.<br><br>
+> Link to the paper: [https://doi.org/10.23919/MVA.2019.8758025](https://doi.org/10.23919/MVA.2019.8758025)
 
 ## Running the Code
 After installing the dependencies from [requirements.txt](./requirements.txt), you can run [the Jupyter Notebook](./Code/PhotometricStereo.ipynb)
